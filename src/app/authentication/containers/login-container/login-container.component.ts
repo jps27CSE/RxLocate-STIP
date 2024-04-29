@@ -8,4 +8,6 @@ import { LoginComponent } from '../../views/login/login.component';
   templateUrl: './login-container.component.html',
   styleUrl: './login-container.component.css',
 })
-export class LoginContainerComponent {}
+export class LoginContainerComponent {
+  onSubmit() {}
+}
