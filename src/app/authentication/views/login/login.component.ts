@@ -17,4 +17,10 @@ export class LoginComponent {
   animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
   }
+
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '800%',
+
+    margin: '0 auto',
+  };
 }
