@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [LottieComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  options: AnimationOptions = {
+    path: './assets/animation/login.json',
+  };
 
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
 }

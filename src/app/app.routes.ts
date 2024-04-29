@@ -8,6 +8,13 @@ export const routes: Routes = [
       import('./landing-page/landing-page.routes').then((c) => c.landingRoutes),
   },
   {
+    path: 'login',
+    loadChildren: () =>
+      import('./authentication/authentication-page.routes').then(
+        (c) => c.authenticationRoutes,
+      ),
+  },
+  {
     path: '**',
     component: NotFoundPageComponent,
   },
