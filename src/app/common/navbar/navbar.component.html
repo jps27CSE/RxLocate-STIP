@@ -1,20 +1,61 @@
-<div>
-  <div class="navbar bg-base-100">
-    <div class="flex-1">
-      <img
-        ngSrc="../assets/home-logo.png"
-        height="54"
-        width="52"
-        alt="home logo"
-      />
-      <a class="btn btn-ghost text-xl">RxLocate</a>
-    </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li>
-          <a class="font-bold text-xl underline underline-offset-1">Login</a>
-        </li>
-      </ul>
-    </div>
+<!--<div>-->
+<!--  <div class="navbar bg-base-100">-->
+<!--    <div class="flex-1">-->
+<!--      <img-->
+<!--        routerLink="/"-->
+<!--        ngSrc="../assets/home-logo.png"-->
+<!--        height="54"-->
+<!--        width="52"-->
+<!--        alt="home logo"-->
+<!--      />-->
+<!--      <a class="btn btn-ghost text-xl" routerLink="/">RxLocate</a>-->
+<!--    </div>-->
+<!--    <div class="flex-none">-->
+<!--      <ul class="menu menu-horizontal px-1">-->
+<!--        <li>-->
+<!--          <a-->
+<!--            routerLink="/"-->
+<!--            class="font-bold text-xl underline underline-offset-1"-->
+<!--            >Home</a-->
+<!--          >-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a-->
+<!--            [routerLink]="['login']"-->
+<!--            class="font-bold text-xl underline underline-offset-1"-->
+<!--            >Login</a-->
+<!--          >-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div
+  class="navbar h-3 bg-gradient-to-r from-blue-50 to-green-50 mb-5 shadow-xl w-11/12 mx-auto rounded-lg"
+>
+  <div class="flex-1">
+    <img
+      routerLink="/"
+      src="../assets/home-logo.png"
+      class="w-16 p-2"
+      alt="home logo"
+      routerLink="/"
+    />
+    <a class="btn btn-ghost text-xl" routerLink="/">RxLocate</a>
+  </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+      <li>
+        <a routerLink="/" class="font-bold my-auto m-2">Home</a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['login']"
+          class="border-none font-bold btn bg-green-300 text-black w-36 h-12 rounded-lg shadow-md"
+          >Login</a
+        >
+      </li>
+    </ul>
   </div>
 </div>
