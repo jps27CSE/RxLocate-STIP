@@ -11,22 +11,27 @@
       </h2>
     </div>
     <!--    input fields-->
-    <div class="flex flex-col input-container">
-      <input
-        class="input input-bordered mb-5 h-16 lg:w-8/12"
-        type="text"
-        placeholder="Location..."
-        required
-      />
-      <input
-        class="input input-bordered h-16 lg:w-8/12"
-        type="text"
-        placeholder="Medicine or Generics"
-        required
-      />
-    </div>
-    <button class="btn bg-[#2D2B2B] mt-5 w-36 text-white">Get Details</button>
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col input-container">
+        <input
+          class="input input-bordered mb-5 h-16 lg:w-8/12"
+          type="text"
+          placeholder="Location..."
+          formControlName="location"
+          required
+        />
+        <input
+          class="input input-bordered h-16 lg:w-8/12"
+          type="text"
+          placeholder="Medicine or Generics"
+          formControlName="medicine"
+          required
+        />
+      </div>
+      <button class="btn bg-[#2D2B2B] mt-5 w-36 text-white">Get Details</button>
+    </form>
   </div>
+
   <!--  right side content-->
   <div class="lg:w-1/2">
     <ng-lottie
