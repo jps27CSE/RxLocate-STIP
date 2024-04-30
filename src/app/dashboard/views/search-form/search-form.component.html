@@ -1,0 +1,38 @@
+<div
+  class="flex lg:flex-row flex-col mx-auto lg:w-11/12 bg-gradient-to-r from-blue-200 to-green-100 rounded-lg"
+>
+  <!--  left side content-->
+  <div class="lg:w-1/2 lg:p-36 p-20">
+    <!--    text area -->
+    <div>
+      <h2 class="text-5xl font-bold mb-10">
+        Find Medicine Usage <br />
+        Insights
+      </h2>
+    </div>
+    <!--    input fields-->
+    <div class="flex flex-col input-container">
+      <input
+        class="input input-bordered mb-5 h-16 lg:w-8/12"
+        type="text"
+        placeholder="Location..."
+        required
+      />
+      <input
+        class="input input-bordered h-16 lg:w-8/12"
+        type="text"
+        placeholder="Medicine or Generics"
+        required
+      />
+    </div>
+    <button class="btn bg-[#2D2B2B] mt-5 w-36 text-white">Get Details</button>
+  </div>
+  <!--  right side content-->
+  <div class="lg:w-1/2">
+    <ng-lottie
+      [options]="options"
+      [styles]="styles"
+      (animationCreated)="animationCreated($event)"
+    />
+  </div>
+</div>
