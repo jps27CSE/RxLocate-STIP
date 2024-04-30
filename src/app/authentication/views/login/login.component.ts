@@ -1,16 +1,40 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [LottieComponent, ReactiveFormsModule],
+  imports: [LottieComponent, ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  @Output() formSubmit: EventEmitter<{ email: string; password: string }> =
+    new EventEmitter();
+  loginForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const formData = this.loginForm.value;
+      this.formSubmit.emit(formData);
+    }
+  }
+
   options: AnimationOptions = {
     path: './assets/animation/login.json',
   };
@@ -21,7 +45,4 @@ export class LoginComponent {
     maxWidth: '800%',
     margin: '0 auto',
   };
-
-  @Input() onSubmit!: void;
-  // loginForm: FormGroup;
 }
