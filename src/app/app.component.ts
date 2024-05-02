@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './common/navbar/navbar.component';
 import { NgOptimizedImage } from '@angular/common';
 import { FooterComponent } from './common/footer/footer.component';
+import { AuthGuard } from './services/authGuard/auth.guard';
 
 @Component({
   selector: 'app-root',

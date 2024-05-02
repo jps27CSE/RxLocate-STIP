@@ -21,13 +21,13 @@
       <form class="card-body" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-control">
           <label class="label">
-            <span class="label-text">Email</span>
+            <span class="label-text">Username</span>
           </label>
           <input
-            type="email"
-            placeholder="email"
+            type="text"
+            placeholder="username"
             class="input input-bordered"
-            formControlName="email"
+            formControlName="username"
             required
           />
         </div>
