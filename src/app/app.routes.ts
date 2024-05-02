@@ -15,6 +15,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./dashboard/dashboard.routes').then((c) => c.dashboardRoutes),
+  },
+  {
     path: '**',
     component: NotFoundPageComponent,
   },
