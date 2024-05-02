@@ -4,6 +4,8 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
 import { Router } from '@angular/router';
 
+interface onInit {}
+
 @Component({
   selector: 'app-login-container',
   standalone: true,
@@ -11,12 +13,18 @@ import { Router } from '@angular/router';
   templateUrl: './login-container.component.html',
   styleUrl: './login-container.component.css',
 })
-export class LoginContainerComponent {
+export class LoginContainerComponent implements onInit {
   constructor(
     private authService: AuthService,
     private token_save: LocalStorageService,
     private router: Router,
   ) {}
+
+  ngOnInit(): void {
+    if (this.token_save.getToken()) {
+      this.router.navigate(['/dashboard/search']);
+    }
+  }
 
   onSubmit(formData: { username: string; password: string }): void {
     console.log('username:', formData.username);
