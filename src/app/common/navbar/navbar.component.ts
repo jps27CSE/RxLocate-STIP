@@ -1,12 +1,27 @@
 import { Component } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NgIf, NgOptimizedImage } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { LocalStorageService } from '../../services/localStorage/local-storage.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [NgOptimizedImage, RouterLink, NgIf],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  constructor(
+    private localStorageService: LocalStorageService,
+    private router: Router,
+  ) {}
+
+  isLoggedIn(): boolean {
+    return !!this.localStorageService.getToken();
+  }
+
+  logout(): void {
+    this.localStorageService.removeFromLocal();
+    this.router.navigate(['/login']);
+  }
+}

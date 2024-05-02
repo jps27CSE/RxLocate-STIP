@@ -17,13 +17,13 @@ import {
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  @Output() formSubmit: EventEmitter<{ email: string; password: string }> =
+  @Output() formSubmit: EventEmitter<{ username: string; password: string }> =
     new EventEmitter();
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }

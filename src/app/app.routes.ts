@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { NotFoundPageComponent } from './common/not-found-page/not-found-page.component';
+import { AuthGuard } from './services/authGuard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,7 @@ export const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./dashboard/dashboard.routes').then((c) => c.dashboardRoutes),
+    canActivate: [AuthGuard],
   },
   {
     path: '**',
