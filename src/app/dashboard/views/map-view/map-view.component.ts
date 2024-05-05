@@ -18,7 +18,7 @@ export class MapViewComponent implements OnInit {
   configMap() {
     this.map = L.map('map', {
       center: [23.78049269183336, 90.40754216930443],
-      zoom: 6,
+      zoom: 15,
     });
 
     L.tileLayer(
@@ -31,7 +31,14 @@ export class MapViewComponent implements OnInit {
 
     L.marker([23.78049269183336, 90.40754216930443])
       .addTo(this.map)
-      .bindPopup('Square Health.')
+      .bindPopup(
+        '<div class="card w-48 h-52 bg-base-100 shadow-xl">\n' +
+          '  <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQqIOF9xZgqVjy-A6LmnbCOaKZxwPzd922GDsu5hzs1Q&s" alt="Shoes" /></figure>\n' +
+          '  <div class="card-body">\n' +
+          '    <h2 class="text-md font-bold mx-auto">Square Health</h2>\n' +
+          '  </div>\n' +
+          '</div>',
+      )
       .openPopup();
   }
 }

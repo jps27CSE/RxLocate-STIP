@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapDetailsComponent } from '../../views/map-details/map-details.component';
 import { MapViewComponent } from '../../views/map-view/map-view.component';
 import { ActivatedRoute } from '@angular/router';
+import { MapService } from '../../../services/map/map.service';
 
 @Component({
   selector: 'app-map-details-container',
@@ -14,7 +15,10 @@ export class MapDetailsContainerComponent implements OnInit {
   location!: string;
   medicine!: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private mapService: MapService,
+  ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.location = params['location'];
