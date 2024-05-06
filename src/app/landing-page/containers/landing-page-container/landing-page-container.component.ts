@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { BannerComponent } from '../../views/banner/banner.component';
 import { FeaturesComponent } from '../../views/features/features.component';
 import { FaqSectionComponent } from '../../views/faq-section/faq-section.component';
+import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
+import { Router } from '@angular/router';
+
+interface onInit {}
 
 @Component({
   selector: 'app-landing-page-container',
