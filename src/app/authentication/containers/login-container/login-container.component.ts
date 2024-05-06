@@ -3,6 +3,7 @@ import { LoginComponent } from '../../views/login/login.component';
 import { AuthService } from '../../../services/auth/auth.service';
 import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 interface onInit {}
 
@@ -18,6 +19,7 @@ export class LoginContainerComponent implements onInit {
     private authService: AuthService,
     private token_save: LocalStorageService,
     private router: Router,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -35,9 +37,11 @@ export class LoginContainerComponent implements onInit {
     this.authService.loginUser(data).subscribe(
       (response) => {
         this.token_save.saveToLocal(response);
+        this.toastr.success('Login Successfully');
         this.router.navigate(['/dashboard/search']);
       },
       (error) => {
+        this.toastr.error('Invalid Credentials');
         console.error('Error :', error);
       },
     );

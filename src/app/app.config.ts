@@ -7,6 +7,8 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { AuthGuard } from './services/authGuard/auth.guard';
 import { LocalStorageService } from './services/localStorage/local-storage.service';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideLottieOptions({
       player: () => player,
     }),
+    provideAnimations(),
+    provideToastr({ positionClass: 'toast-top-center' }),
   ],
 };
