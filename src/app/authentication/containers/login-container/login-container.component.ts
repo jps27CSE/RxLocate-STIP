@@ -27,8 +27,6 @@ export class LoginContainerComponent implements onInit {
   }
 
   onSubmit(formData: { username: string; password: string }): void {
-    console.log('username:', formData.username);
-    console.log('Password:', formData.password);
     const data = {
       username: formData.username,
       password: formData.password,
@@ -36,7 +34,6 @@ export class LoginContainerComponent implements onInit {
 
     this.authService.loginUser(data).subscribe(
       (response) => {
-        console.log('login response:', response);
         this.token_save.saveToLocal(response);
         this.router.navigate(['/dashboard/search']);
       },

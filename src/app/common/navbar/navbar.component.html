@@ -46,7 +46,14 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-      <li>
+      <li *ngIf="isLoggedIn()">
+        <a
+          [routerLink]="['dashboard', 'search']"
+          class="border-none font-bold btn mr-2 text-black rounded-lg shadow-md"
+          >Search</a
+        >
+      </li>
+      <li *ngIf="!isLoggedIn()">
         <a routerLink="/" class="font-bold my-auto m-2">Home</a>
       </li>
       <li *ngIf="isLoggedIn()">
