@@ -40,5 +40,12 @@ export class MapViewComponent implements OnInit {
           '</div>',
       )
       .openPopup();
+
+    L.circle([23.78049269183336, 90.40754216930443], {
+      // color: '#a5a0a0',
+      fillColor: '#b2d9ed',
+      fillOpacity: 0.5,
+      radius: 500,
+    }).addTo(this.map);
   }
 }
