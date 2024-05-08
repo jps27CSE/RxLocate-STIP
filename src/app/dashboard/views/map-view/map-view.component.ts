@@ -42,7 +42,7 @@ export class MapViewComponent implements OnInit {
       .openPopup();
 
     L.circle([23.78049269183336, 90.40754216930443], {
-      // color: '#a5a0a0',
+      color: '#b2d9ed',
       fillColor: '#b2d9ed',
       fillOpacity: 0.5,
       radius: 500,
