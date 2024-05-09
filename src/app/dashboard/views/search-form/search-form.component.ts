@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-search-form',
@@ -20,7 +21,10 @@ export class SearchFormComponent {
     new EventEmitter();
   searchForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+  ) {
     this.searchForm = this.fb.group({
       location: ['', [Validators.required]],
       medicine: ['', [Validators.required]],
@@ -31,6 +35,8 @@ export class SearchFormComponent {
     if (this.searchForm.valid) {
       const formData = this.searchForm.value;
       this.formSubmit.emit(formData);
+    } else {
+      this.toastr.error('Please fill in all fields');
     }
   }
 

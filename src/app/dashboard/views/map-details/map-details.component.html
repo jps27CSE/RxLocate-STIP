@@ -1,21 +1,36 @@
 <div
-  class="shadow-xl rounded-l-lg bg-gradient-to-r from-blue-50 to-green-50 h-[70vh] p-20"
+  class="shadow-xl rounded-l-lg bg-gradient-to-r from-blue-50 to-green-50 h-[70vh] lg:p-20 p-7"
 >
   <!--  icon with text-->
   <div></div>
   <!--  location-->
-  <div>
+  <div class="mb-5">
     <h2 class="text-2xl font-bold text-gray-600 mb-2">Location:</h2>
-    <input class="input input-bordered" disabled value="Mohakhali" />
+    <div class="flex flex-row">
+      <img class="w-10 h-10 my-auto" src="assets/location-pin.png" />
+      <input class="input input-bordered" disabled value="Mohakhali" />
+    </div>
   </div>
   <!--  medicine or generics-->
-  <div class="mt-2">
+  <div class="mt-5">
     <h2 class="text-2xl font-bold text-gray-600 mb-2">Medicine or Generics:</h2>
-    <input class="input input-bordered" disabled value="Napa" />
+    <div class="flex flex-row">
+      <img class="w-10 h-10 my-auto" src="assets/drugs.png" />
+      <input class="input input-bordered" disabled value="Napa" />
+    </div>
   </div>
   <!--  prescribed count-->
-  <div class="mt-2">
+  <div class="mt-5">
     <h2 class="text-2xl font-bold text-gray-600 mb-2">Prescribed Count:</h2>
-    <input class="input input-bordered" disabled value="10" />
+    <div class="flex flex-row">
+      <img class="w-10 h-10 my-auto" src="assets/prescribe.png" />
+      <input class="input input-bordered" disabled value="10" />
+    </div>
   </div>
+  <button
+    routerLink="/dashboard/search"
+    class="btn mt-10 border-none bg-blue-200 w-4/12 mx-auto"
+  >
+    Back
+  </button>
 </div>

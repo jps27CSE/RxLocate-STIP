@@ -3,6 +3,8 @@ import { BannerComponent } from '../../views/banner/banner.component';
 import { FeaturesComponent } from '../../views/features/features.component';
 import { FaqSectionComponent } from '../../views/faq-section/faq-section.component';
 
+interface onInit {}
+
 @Component({
   selector: 'app-landing-page-container',
   standalone: true,

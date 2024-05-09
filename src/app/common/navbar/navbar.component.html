@@ -33,6 +33,7 @@
 
 <div
   class="navbar h-3 bg-gradient-to-r from-blue-50 to-green-50 mb-5 shadow-xl w-11/12 mx-auto rounded-lg"
+  data-aos="fade-down"
 >
   <div class="flex-1">
     <img
@@ -46,13 +47,20 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-      <li>
+      <li *ngIf="isLoggedIn()">
+        <a
+          [routerLink]="['dashboard', 'search']"
+          class="border-none font-bold btn mr-2 text-black rounded-lg shadow-md"
+          >Search</a
+        >
+      </li>
+      <li *ngIf="!isLoggedIn()">
         <a routerLink="/" class="font-bold my-auto m-2">Home</a>
       </li>
       <li *ngIf="isLoggedIn()">
         <!-- Show Logout button if user is logged in -->
         <button
-          class="border-none font-bold btn bg-red-300 text-black w-36 h-12 rounded-lg shadow-md"
+          class="border-none font-bold btn bg-red-300 text-black lg:w-36 lg:h-12 rounded-lg shadow-md"
           (click)="logout()"
         >
           Logout
@@ -61,7 +69,7 @@
       <li *ngIf="!isLoggedIn()">
         <a
           [routerLink]="['login']"
-          class="border-none font-bold btn bg-green-300 text-black w-36 h-12 rounded-lg shadow-md"
+          class="border-none font-bold btn bg-green-300 text-black lg:w-36 h-12 rounded-lg shadow-md"
           >Login</a
         >
       </li>
