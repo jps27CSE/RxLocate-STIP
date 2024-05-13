@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -8,17 +14,20 @@ import * as L from 'leaflet';
   templateUrl: './map-view.component.html',
   styleUrl: './map-view.component.css',
 })
-export class MapViewComponent implements OnInit {
-  ngOnInit() {
-    this.configMap();
-  }
-
+export class MapViewComponent implements OnChanges {
   map: any;
+  @Input() fullData!: any;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fullData'] && this.fullData) {
+      this.configMap();
+    }
+  }
 
   configMap() {
     this.map = L.map('map', {
-      center: [23.78049269183336, 90.40754216930443],
-      zoom: 15,
+      center: [this.fullData?.locationLat, this.fullData?.locationLng],
+      zoom: 16,
     });
 
     L.tileLayer(
@@ -29,19 +38,21 @@ export class MapViewComponent implements OnInit {
       },
     ).addTo(this.map);
 
-    L.marker([23.78049269183336, 90.40754216930443])
+    L.marker([this.fullData?.locationLat, this.fullData?.locationLng])
       .addTo(this.map)
       .bindPopup(
         '<div class="card w-48 h-52 bg-base-100 shadow-xl">\n' +
           '  <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQqIOF9xZgqVjy-A6LmnbCOaKZxwPzd922GDsu5hzs1Q&s" alt="Shoes" /></figure>\n' +
           '  <div class="card-body">\n' +
-          '    <h2 class="text-md font-bold mx-auto">Square Health</h2>\n' +
+          '<h2 class="text-md font-bold mx-auto">' +
+          (this.fullData?.locationName || '') +
+          '</h2>' +
           '  </div>\n' +
           '</div>',
       )
       .openPopup();
 
-    L.circle([23.78049269183336, 90.40754216930443], {
+    L.circle([this.fullData?.locationLat, this.fullData?.locationLng], {
       color: '#b2d9ed',
       fillColor: '#b2d9ed',
       fillOpacity: 0.5,

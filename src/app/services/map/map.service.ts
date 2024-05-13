@@ -28,4 +28,23 @@ export class MapService {
       return null;
     }
   }
+
+  Get_Location_Medicine(
+    location: string,
+    medicine: string,
+  ): Observable<any> | null {
+    const url = `${this.mapApiUrl}/${location}/${medicine}`;
+
+    const token = this.localStorageService.getToken();
+
+    if (token) {
+      const headers = new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      });
+      return this.http.get(url, { headers });
+    } else {
+      console.log('Token not available');
+      return null;
+    }
+  }
 }
