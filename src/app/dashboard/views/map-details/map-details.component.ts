@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,4 +8,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './map-details.component.html',
   styleUrl: './map-details.component.css',
 })
-export class MapDetailsComponent {}
+export class MapDetailsComponent {
+  @Input() fullData!: any;
+}

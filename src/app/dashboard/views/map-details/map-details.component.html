@@ -8,7 +8,11 @@
     <h2 class="text-2xl font-bold text-gray-600 mb-2">Location:</h2>
     <div class="flex flex-row">
       <img class="w-10 h-10 my-auto" src="assets/location-pin.png" />
-      <input class="input input-bordered" disabled value="Mohakhali" />
+      <input
+        class="input input-bordered"
+        disabled
+        [value]="fullData?.locationName"
+      />
     </div>
   </div>
   <!--  medicine or generics-->
@@ -16,7 +20,11 @@
     <h2 class="text-2xl font-bold text-gray-600 mb-2">Medicine or Generics:</h2>
     <div class="flex flex-row">
       <img class="w-10 h-10 my-auto" src="assets/drugs.png" />
-      <input class="input input-bordered" disabled value="Napa" />
+      <input
+        class="input input-bordered"
+        disabled
+        [value]="fullData?.drugName"
+      />
     </div>
   </div>
   <!--  prescribed count-->
@@ -24,7 +32,11 @@
     <h2 class="text-2xl font-bold text-gray-600 mb-2">Prescribed Count:</h2>
     <div class="flex flex-row">
       <img class="w-10 h-10 my-auto" src="assets/prescribe.png" />
-      <input class="input input-bordered" disabled value="10" />
+      <input
+        class="input input-bordered"
+        disabled
+        [value]="fullData?.prescriptionCount"
+      />
     </div>
   </div>
   <button

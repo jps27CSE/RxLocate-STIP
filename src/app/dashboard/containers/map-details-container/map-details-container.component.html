@@ -1,9 +1,9 @@
 <div class="flex lg:flex-row flex-col w-11/12 mx-auto">
   <div class="lg:w-8/12 h-[70vh]">
-    <app-map-details></app-map-details>
+    <app-map-details [fullData]="fullData"></app-map-details>
   </div>
 
   <div class="w-full">
-    <app-map-view></app-map-view>
+    <app-map-view [fullData]="fullData"></app-map-view>
   </div>
 </div>
