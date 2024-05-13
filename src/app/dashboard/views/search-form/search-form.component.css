@@ -1,11 +1,11 @@
-.input-container {
-  position: relative;
-}
+/*.input-container {*/
+/*  position: relative;*/
+/*}*/
 
-.input-container input[type="text"]::placeholder {
-  padding-left: 30px; /* Adjust the padding to position the placeholder text properly */
-  background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-circle-outline-512.png"); /* Replace 'path/to/your/icon.svg' with the path to your circle icon */
-  background-size: 20px; /* Adjust the size of the icon as needed */
-  background-repeat: no-repeat;
-  background-position: 5px center; /* Adjust the position of the icon horizontally */
-}
+/*.input-container input[type="text"]::placeholder {*/
+/*  padding-left: 30px; !* Adjust the padding to position the placeholder text properly *!*/
+/*  background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-circle-outline-512.png"); !* Replace 'path/to/your/icon.svg' with the path to your circle icon *!*/
+/*  background-size: 20px; !* Adjust the size of the icon as needed *!*/
+/*  background-repeat: no-repeat;*/
+/*  background-position: 5px center; !* Adjust the position of the icon horizontally *!*/
+/*}*/
