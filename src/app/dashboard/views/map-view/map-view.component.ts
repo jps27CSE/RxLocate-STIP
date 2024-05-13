@@ -42,7 +42,7 @@ export class MapViewComponent implements OnChanges {
       .addTo(this.map)
       .bindPopup(
         '<div class="card w-48 h-52 bg-base-100 shadow-xl">\n' +
-          '  <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQqIOF9xZgqVjy-A6LmnbCOaKZxwPzd922GDsu5hzs1Q&s" alt="Shoes" /></figure>\n' +
+          '  <figure><img src="https://i.pinimg.com/originals/08/f1/8f/08f18f99279bfc06cdcab2d5ca1227e2.gif" alt="Shoes" /></figure>\n' +
           '  <div class="card-body">\n' +
           '<h2 class="text-md font-bold mx-auto">' +
           (this.fullData?.locationName || '') +
