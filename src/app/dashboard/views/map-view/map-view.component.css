@@ -3,7 +3,7 @@
 }
 
 #map {
-  height: 159%;
+  height: 158%;
   width: 100%;
 }
 @media only screen and (max-width: 425px) {
@@ -13,6 +13,17 @@
 
   #map {
     height: 700px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .map-container {
+    height: auto;
+  }
+
+  #map {
+    height: 500px;
     width: 100%;
   }
 }

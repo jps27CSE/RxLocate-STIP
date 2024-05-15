@@ -47,6 +47,13 @@ export class MapViewComponent implements OnChanges {
           '<h2 class="text-md font-bold mx-auto">' +
           (this.fullData?.locationName || '') +
           '</h2>' +
+          // Conditionally show prescription count only if it's not zero
+          (this.fullData?.prescriptionCount !== 0
+            ? '<h2 class="text-md font-bold mx-auto">' +
+              'Count: ' +
+              (this.fullData?.prescriptionCount || '') +
+              '</h2>'
+            : '') +
           '  </div>\n' +
           '</div>',
       )
