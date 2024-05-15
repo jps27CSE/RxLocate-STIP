@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MedicineService {
-  private mapApiUrl = 'http://localhost:8080/map/drugs';
+  private mapApiUrl = `${environment.API_BASE_URL}/map/drugs`;
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService,
