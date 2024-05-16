@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  API_BASE_URL: 'https://gw9.jotno.dev',
+  API_BASE_URL: 'http://localhost:8080',
   APP_VERSION: 'local-0.0.1',
 };
