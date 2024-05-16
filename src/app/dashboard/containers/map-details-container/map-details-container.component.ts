@@ -17,6 +17,8 @@ export class MapDetailsContainerComponent implements OnInit {
   medicine!: string;
   fullData!: any;
 
+  loader!: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService,
@@ -28,22 +30,29 @@ export class MapDetailsContainerComponent implements OnInit {
       this.location = params['location'];
       this.medicine = params['medicine'];
     });
-
-    this.getLocationMedicine(this.location, this.medicine);
   }
-  getLocationMedicine(location: string, medicine: string): void {
+
+  getLocationMedicine(location: string, drug: string): void {
+    this.loader = true;
     // @ts-ignore
-    this.mapService.Get_Location_Medicine(location, medicine).subscribe(
+    this.mapService.Get_Location_Medicine(location, drug).subscribe(
       (data) => {
         // Handle the response data here
         this.fullData = data;
+        this.loader = false;
         console.log('Location Medicine Data:', data);
       },
       (error) => {
+        this.loader = false;
         this.local.removeFromLocal();
         this.router.navigate(['/login']);
         console.error('Error fetching location medicine:', error);
       },
     );
+  }
+
+  searchClicked(event: { location: string; medicine: string }) {
+    console.log('from:', event.location, event.medicine);
+    this.getLocationMedicine(event.location, event.medicine);
   }
 }
