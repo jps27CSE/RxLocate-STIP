@@ -1,68 +1,68 @@
-<div
-  class="shadow-xl rounded-l-lg bg-gradient-to-r from-blue-50 to-green-50 h-[70vh] lg:p-14 p-7"
->
+<div class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg">
   <!-- icon with text -->
   <div></div>
   <!-- location -->
   <div class="mb-5">
-    <form [formGroup]="searchForm" (ngSubmit)="onSearchClicked()">
-      <h2 class="text-2xl font-bold text-gray-600 mb-2">Location:</h2>
-      <div class="flex flex-row">
-        <img class="w-10 h-10 my-auto" src="assets/location-pin.png" />
-        <p-autoComplete
-          class="autoComplete-field"
-          formControlName="location"
-          placeholder="Location..."
-          [showEmptyMessage]="true"
-          [required]="true"
-          [style]="{ width: '100%', height: '60px', margin: '5px' }"
-          [inputStyle]="{ width: '80%', padding: '10px' }"
-          [suggestions]="filteredLocationSuggestions"
-          (completeMethod)="filterLocationSuggestions($event)"
-        ></p-autoComplete>
+    <p class="text-sm">Showing Result for</p>
+    <!--    showing results-->
+    <p class="font-bold">Dhaka,Ace 500mg</p>
+
+    <div class="mt-5 flex flex-row gap-16">
+      <div>
+        <p>Prescribed by</p>
+        <p><span class="font-bold text-lg">359</span> Doctors</p>
+      </div>
+      <div>
+        <p>Total Quantity</p>
+        <p><span class="font-bold text-lg">2,86,76</span> (pieces)</p>
+      </div>
+    </div>
+  </div>
+
+  <!--  table of data info-->
+  <div class="bg-white h-auto w-12/12 mx-auto rounded-lg">
+    <p class="p-2 text-sm">Most Prescribed at (top-10)</p>
+    <!--    list of data-->
+    <div class="p-2">
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Banani</p>
+        <p><span class="font-bold">79</span> Doctors</p>
       </div>
 
-      <!-- medicine or generics -->
-      <div class="mt-5">
-        <h2 class="text-2xl font-bold text-gray-600 mb-2">
-          Medicine or Generics:
-        </h2>
-        <div class="flex flex-row">
-          <img class="w-10 h-10 my-auto" src="assets/drugs.png" />
-          <p-autoComplete
-            class="autoComplete-field"
-            formControlName="medicine"
-            placeholder="Medicine or Drugs"
-            [showEmptyMessage]="true"
-            [required]="true"
-            [style]="{ width: '100%', height: '60px', margin: '5px' }"
-            [inputStyle]="{ width: '80%', padding: '10px' }"
-            [suggestions]="filteredDrugSuggestions"
-            (completeMethod)="filterDrugSuggestions($event)"
-          ></p-autoComplete>
-        </div>
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Gulshan-1</p>
+        <p><span class="font-bold">79</span> Doctors</p>
       </div>
 
-      <!-- prescribed count -->
-      <div class="mt-5">
-        <h2 class="text-2xl font-bold text-gray-600 mb-2">Prescribed Count:</h2>
-        <div class="flex flex-row">
-          <img class="w-10 h-10 my-auto" src="assets/prescribe.png" />
-          <input
-            disabled
-            class="input input-bordered"
-            [value]="fullData?.prescriptionCount"
-          />
-        </div>
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Mohammadpur</p>
+        <p><span class="font-bold">79</span> Doctors</p>
       </div>
 
-      <!-- Search button -->
-      <button
-        type="submit"
-        class="btn mt-10 border-none bg-blue-200 w-4/12 mx-auto"
-      >
-        Search
-      </button>
-    </form>
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Vatara</p>
+        <p><span class="font-bold">79</span> Doctors</p>
+      </div>
+
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Mirpur-1</p>
+        <p><span class="font-bold">79</span> Doctors</p>
+      </div>
+
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Kolabagan</p>
+        <p><span class="font-bold">79</span> Doctors</p>
+      </div>
+
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Mohakhali</p>
+        <p><span class="font-bold">79</span> Doctors</p>
+      </div>
+
+      <div class="flex flex-row justify-between border-b-2 mb-2">
+        <p>Rampura</p>
+        <p><span class="font-bold">79</span> Doctors</p>
+      </div>
+    </div>
   </div>
 </div>

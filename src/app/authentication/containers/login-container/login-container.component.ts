@@ -24,7 +24,7 @@ export class LoginContainerComponent implements onInit {
 
   ngOnInit(): void {
     if (this.token_save.getToken()) {
-      this.router.navigate(['/dashboard/search']);
+      this.router.navigate(['/dashboard/map']);
     }
   }
 

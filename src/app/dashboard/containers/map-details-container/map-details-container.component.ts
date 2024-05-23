@@ -4,11 +4,13 @@ import { MapViewComponent } from '../../views/map-view/map-view.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MapService } from '../../../services/map/map.service';
 import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
+import { SearchFieldComponent } from '../../views/search-field/search-field.component';
+import { PrescriptionService } from '../../../services/prescription/prescription.service';
 
 @Component({
   selector: 'app-map-details-container',
   standalone: true,
-  imports: [MapDetailsComponent, MapViewComponent],
+  imports: [MapDetailsComponent, MapViewComponent, SearchFieldComponent],
   templateUrl: './map-details-container.component.html',
   styleUrl: './map-details-container.component.css',
 })
@@ -16,21 +18,16 @@ export class MapDetailsContainerComponent implements OnInit {
   location!: string;
   medicine!: string;
   fullData!: any;
-
   loader!: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService,
+    private prescriptionService: PrescriptionService,
     private local: LocalStorageService,
     private router: Router,
   ) {}
-  ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.location = params['location'];
-      this.medicine = params['medicine'];
-    });
-  }
+  ngOnInit(): void {}
 
   getLocationMedicine(location: string, drug: string): void {
     this.loader = true;
@@ -50,9 +47,36 @@ export class MapDetailsContainerComponent implements OnInit {
       },
     );
   }
+  getAllPrescriptions(location: string): void {
+    this.loader = true;
+    const prescriptionObservable =
+      this.prescriptionService.Get_All_Prescription(location);
+    if (prescriptionObservable) {
+      prescriptionObservable.subscribe(
+        (data) => {
+          // Handle the response data here
+          this.fullData = data;
+          this.loader = false;
+          console.log(data);
+        },
+        (error) => {
+          this.loader = false;
+          this.local.removeFromLocal();
+          this.router.navigate(['/login']);
+          console.error('Error fetching prescriptions:', error);
+        },
+      );
+    } else {
+      this.loader = false;
+      console.error('No token available to fetch prescriptions');
+    }
+  }
 
-  searchClicked(event: { location: string; medicine: string }) {
-    console.log('from:', event.location, event.medicine);
-    this.getLocationMedicine(event.location, event.medicine);
+  onSubmit(event: { location: string; medicine: string }) {
+    if (event.medicine) {
+      this.getLocationMedicine(event.location, event.medicine);
+    } else {
+      this.getAllPrescriptions(event.location);
+    }
   }
 }

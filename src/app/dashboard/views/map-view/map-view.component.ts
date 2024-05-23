@@ -1,62 +1,29 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet.markercluster';
 import { DialogModule } from 'primeng/dialog';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
+import { geocoder } from 'leaflet-control-geocoder';
 
 @Component({
   selector: 'app-map-view',
   standalone: true,
   imports: [DialogModule],
   templateUrl: './map-view.component.html',
-  styleUrl: './map-view.component.css',
+  styleUrls: ['./map-view.component.css'],
 })
-export class MapViewComponent implements OnInit {
+export class MapViewComponent implements OnInit, AfterViewInit {
   map: any;
   @Input() fullData!: any;
   defaultLocationLat = 23.8058536;
   defaultLocationLng = 90.4143504;
-  locations = [
-    {
-      lat: 23.7806615,
-      lng: 90.4112899,
-      name: 'Gulshan-1',
-    },
-    {
-      lat: 23.7947552,
-      lng: 90.3954059,
-      name: 'Banani',
-    },
-    {
-      lat: 23.7470303,
-      lng: 90.3655623,
-      name: 'Dhanmondi',
-    },
-    {
-      lat: 23.7945624,
-      lng: 90.3435587,
-      name: 'Mirpur-1',
-    },
-    {
-      lat: 23.8766322,
-      lng: 90.3576884,
-      name: 'Uttara',
-    },
-  ];
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['fullData'] && this.fullData) {
-  //     this.configMap();
-  //   }
-  // }
 
   ngOnInit() {
     this.configMap();
   }
+
+  ngAfterViewInit() {}
 
   configMap() {
     this.map = L.map('map', {
@@ -64,7 +31,7 @@ export class MapViewComponent implements OnInit {
         this.fullData?.locationLat || this.defaultLocationLat,
         this.fullData?.locationLng || this.defaultLocationLng,
       ],
-      zoom: this.fullData ? 16 : 9,
+      zoom: this.fullData ? 10 : 10,
     });
 
     L.tileLayer(
@@ -75,58 +42,57 @@ export class MapViewComponent implements OnInit {
       },
     ).addTo(this.map);
 
-    this.locations.forEach((location) => {
-      const marker = L.marker([location.lat, location.lng])
-        .addTo(this.map)
-        .bindPopup(
-          `<div class="card-body">
-        <h2 class="text-2xl font-bold mx-auto">${location.name}</h2>
-        <button class="btn btn-primary h-4" >View Details</button>
-      </div>`,
-        );
+    // (L.Control as any).geocoder().addTo(this.map)
+
+    // geocoder.on('markgeocode', function (event: any) {
+    //   const { latlng, name } = event.geocode;
+    //   console.log(
+    //     `Latitude: ${latlng.lat}, Longitude: ${latlng.lng}, Name: ${name}`,
+    //   );
+    // });
+
+    const markers = L.markerClusterGroup({
+      iconCreateFunction: function (cluster) {
+        return L.divIcon({
+          html:
+            '<b class="text-2xl rounded-full bg-blue-500 text-white px-4 py-2">' +
+            cluster.getChildCount() +
+            '</b>',
+        });
+      },
     });
+
+    this.fullData?.forEach((location: any) => {
+      const markerIcon = L.icon({
+        iconUrl: `https://static.vecteezy.com/system/resources/previews/028/251/987/original/doctor-3d-icon-illustration-free-png.png`,
+        iconSize: [70, 70],
+        iconAnchor: [22, 41],
+        popupAnchor: [1, -34],
+        // shadowUrl: 'path_to_your_marker_icons/marker-shadow.png',
+        shadowSize: [41, 41],
+      });
+
+      const marker = L.marker([location.lat, location.lng], {
+        icon: markerIcon,
+      }).bindPopup(
+        `<div class="card-body">
+            <h2 class="text-2xl font-bold mx-auto">${location.name}</h2>
+            <button class="btn btn-primary h-4">View Details</button>
+          </div>`,
+      );
+      markers.addLayer(marker);
+    });
+
+    this.map.addLayer(markers);
 
     // Optionally, you can also add a circle for each location
-    this.locations.forEach((location) => {
-      L.circle([location.lat, location.lng], {
-        color: '#b2d9ed',
-        fillColor: '#b2d9ed',
-        fillOpacity: 0.5,
-        radius: 500,
-      }).addTo(this.map);
-    });
-
-    // L.marker([this.fullData?.locationLat, this.fullData?.locationLng])
-    //   .addTo(this.map)
-    //   .bindPopup(
-    //     '  <div class="card-body">\n' +
-    //       '<h2 class="text-md font-bold mx-auto">' +
-    //       (this.fullData?.locationName || '') +
-    //       '</h2>' +
-    //       // Conditionally show prescription count only if it's not zero
-    //       (this.fullData?.prescriptionCount !== 0
-    //         ? '<h2 class="text-md font-bold mx-auto">' +
-    //           'Count: ' +
-    //           (this.fullData?.prescriptionCount || '') +
-    //           '</h2>'
-    //         : '') +
-    //       '  </div>\n' +
-    //       '</div>',
-    //   )
-    //   .openPopup();
-
-    //   L.circle(
-    //     [
-    //       this.fullData?.locationLat || this.defaultLocationLat,
-    //       this.fullData?.locationLng || this.defaultLocationLng,
-    //     ],
-    //     {
-    //       color: '#b2d9ed',
-    //       fillColor: '#b2d9ed',
-    //       fillOpacity: 0.5,
-    //       radius: 500,
-    //     },
-    //   ).addTo(this.map);
-    // }
+    // this.locations.forEach((location) => {
+    //   L.circle([location.lat, location.lng], {
+    //     color: '#c3e7ef',
+    //     fillColor: '#c3e7ef',
+    //     fillOpacity: 0.5,
+    //     radius: 50,
+    //   }).addTo(this.map);
+    // });
   }
 }
