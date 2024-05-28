@@ -11,6 +11,17 @@
     >
       <p-autoComplete
         class="autoComplete-field w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
+        formControlName="medicine"
+        placeholder="Search by Drug"
+        [inputStyle]="{
+          borderBottom: '1px ',
+          padding: '5px'
+        }"
+        [suggestions]="filteredDrugSuggestions"
+        (completeMethod)="filterDrugSuggestions($event)"
+      ></p-autoComplete>
+      <p-autoComplete
+        class="autoComplete-field w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
         formControlName="location"
         placeholder="Search by Location"
         [inputStyle]="{
@@ -21,17 +32,7 @@
         [suggestions]="filteredLocationSuggestions"
         (completeMethod)="filterLocationSuggestions($event)"
       ></p-autoComplete>
-      <p-autoComplete
-        class="autoComplete-field w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
-        formControlName="medicine"
-        placeholder="Search by Drug"
-        [inputStyle]="{
-          borderBottom: '1px ',
-          padding: '5px'
-        }"
-        [suggestions]="filteredDrugSuggestions"
-        (completeMethod)="filterDrugSuggestions($event)"
-      ></p-autoComplete>
+
       <button
         class="m-2 h-9 w-full sm:w-20 rounded-full btn-active btn-neutral lg:mb-0 mb-16"
       >

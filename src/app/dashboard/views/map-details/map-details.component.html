@@ -5,7 +5,11 @@
   <div class="mb-5">
     <p class="text-sm">Showing Result for</p>
     <!--    showing results-->
-    <p class="font-bold">Dhaka,Ace 500mg</p>
+    @if (fullData) {
+      <p class="font-bold">
+        Dhaka,<span>{{ fullData[0].drugName }}</span>
+      </p>
+    }
 
     <div class="mt-5 flex flex-row gap-16">
       <div>
@@ -20,16 +24,18 @@
   </div>
 
   <!--  table of data info-->
-  <div class="bg-white h-auto w-12/12 mx-auto rounded-lg">
-    <p class="p-2 text-sm">Most Prescribed at (top-10)</p>
-    <!--    list of data-->
-    <div class="p-2" *ngFor="let data of fullData">
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>{{ data.divisionName }}</p>
-        <p>
-          <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
-        </p>
+  @if (fullData) {
+    <div class="bg-white h-auto w-12/12 mx-auto rounded-lg" data-aos="zoom-in">
+      <p class="p-2 text-sm">Most Prescribed at (top-10)</p>
+      <!--    list of data-->
+      <div class="p-2" *ngFor="let data of fullData">
+        <div class="flex flex-row justify-between border-b-2 mb-2">
+          <p>{{ data.divisionName }}</p>
+          <p>
+            <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+  }
 </div>
