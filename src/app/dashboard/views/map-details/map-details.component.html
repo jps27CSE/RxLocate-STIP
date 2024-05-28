@@ -1,52 +1,68 @@
-<div class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg">
-  <!-- icon with text -->
-  <div></div>
-  <!-- location -->
-  <div class="mb-5">
-    <p class="text-sm">Showing Result for</p>
-    <!--    showing results-->
-    @if (fullData) {
-      <p class="font-bold">
-        Dhaka,<span>{{ fullData[0].drugName }}</span>
-      </p>
-    }
+@if (fullData) {
+  <div
+    class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
+  >
+    <!-- icon with text -->
+    <div></div>
+    <!-- location -->
+    <div class="mb-5" data-aos="zoom-in">
+      <p class="text-sm">Showing Result for</p>
+      <!--    showing results-->
+      @if (fullData) {
+        <p class="font-bold">
+          Dhaka,<span>{{ fullData[0].drugName }}</span>
+        </p>
+      }
 
-    <div class="mt-5 flex flex-row gap-16">
-      <div>
-        <p>Prescribed by</p>
-        <p><span class="font-bold text-lg">359</span> Doctors</p>
+      <div class="mt-5 flex flex-row gap-16">
+        <div>
+          <p>Prescribed by</p>
+          <p><span class="font-bold text-lg">359</span> Doctors</p>
+        </div>
+        <!--      <div>-->
+        <!--        <p>Total Quantity</p>-->
+        <!--        <p><span class="font-bold text-lg">2,86,76</span> (pieces)</p>-->
+        <!--      </div>-->
       </div>
-      <!--      <div>-->
-      <!--        <p>Total Quantity</p>-->
-      <!--        <p><span class="font-bold text-lg">2,86,76</span> (pieces)</p>-->
-      <!--      </div>-->
     </div>
-  </div>
 
-  <!--  table of data info-->
-  @if (fullData) {
-    <div class="bg-white h-auto w-12/12 mx-auto rounded-lg" data-aos="zoom-in">
-      <p class="p-2 text-sm">Most Prescribed</p>
-      <!--    list of data-->
+    <!--  table of data info-->
+    @if (fullData) {
       <div
-        class="p-2"
-        *ngFor="let data of fullData"
-        (click)="onLocationClick(data.divisionName)"
+        class="bg-white h-auto w-12/12 mx-auto rounded-lg"
+        data-aos="zoom-in"
       >
+        <p class="p-2 text-sm">Most Prescribed</p>
+        <!--    list of data-->
         <div
-          class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer"
+          class="p-2"
+          *ngFor="let data of fullData"
+          (click)="onLocationClick(data.divisionName)"
         >
-          @if (data.divisionName) {
-            <p>{{ data.divisionName }}</p>
-          }
-          @if (data.locationName) {
-            <p>{{ data.locationName }}</p>
-          }
-          <p>
-            <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
-          </p>
+          <div
+            class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer"
+          >
+            @if (data.divisionName) {
+              <p>{{ data.divisionName }}</p>
+            }
+            @if (data.locationName) {
+              <p>{{ data.locationName }}</p>
+            }
+            <p>
+              <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  }
-</div>
+    }
+  </div>
+}
+
+@if (!fullData) {
+  <div
+    class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
+  >
+    <h2 class="text-xl font-bold mb-4">No Data Available</h2>
+    <p class="text-lg">Please search for a drug to see the results.</p>
+  </div>
+}

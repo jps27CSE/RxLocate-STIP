@@ -69,30 +69,30 @@ export class MapDetailsContainerComponent implements OnInit {
     );
   }
 
-  getAllPrescriptions(location: string): void {
-    this.loader = true;
-    const prescriptionObservable =
-      this.prescriptionService.Get_All_Prescription(location);
-    if (prescriptionObservable) {
-      prescriptionObservable.subscribe(
-        (data) => {
-          // Handle the response data here
-          this.fullData = data;
-          this.loader = false;
-          console.log(data);
-        },
-        (error) => {
-          this.loader = false;
-          this.local.removeFromLocal();
-          this.router.navigate(['/login']);
-          console.error('Error fetching prescriptions:', error);
-        },
-      );
-    } else {
-      this.loader = false;
-      console.error('No token available to fetch prescriptions');
-    }
-  }
+  // getAllPrescriptions(location: string): void {
+  //   this.loader = true;
+  //   const prescriptionObservable =
+  //     this.prescriptionService.Get_All_Prescription(location);
+  //   if (prescriptionObservable) {
+  //     prescriptionObservable.subscribe(
+  //       (data) => {
+  //         // Handle the response data here
+  //         this.fullData = data;
+  //         this.loader = false;
+  //         console.log(data);
+  //       },
+  //       (error) => {
+  //         this.loader = false;
+  //         this.local.removeFromLocal();
+  //         this.router.navigate(['/login']);
+  //         console.error('Error fetching prescriptions:', error);
+  //       },
+  //     );
+  //   } else {
+  //     this.loader = false;
+  //     console.error('No token available to fetch prescriptions');
+  //   }
+  // }
 
   onSubmit(event: { location: string; medicine: string }) {
     if (event.medicine && event.location === '') {
