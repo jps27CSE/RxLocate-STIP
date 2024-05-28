@@ -15,6 +15,7 @@ import { LocalStorageService } from '../../../services/localStorage/local-storag
 import { MedicineService } from '../../../services/medicine/medicine.service';
 import { ToastrService } from 'ngx-toastr';
 import { DropdownModule } from 'primeng/dropdown';
+
 @Component({
   selector: 'app-search-field',
   standalone: true,
@@ -27,24 +28,23 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
   ],
   templateUrl: './search-field.component.html',
-  styleUrl: './search-field.component.css',
+  styleUrls: ['./search-field.component.css'],
 })
 export class SearchFieldComponent implements OnInit {
-  @Output() formSubmit: EventEmitter<{ location: string; medicine: string }> =
-    new EventEmitter();
+  @Output() formSubmit: EventEmitter<{
+    location: string;
+    medicine: string;
+    data?: any;
+  }> = new EventEmitter();
   searchForm: FormGroup;
 
-  division: Array<{ name: string }> = [
-    { name: 'Dhaka' },
-    { name: 'Chattogram' },
-    { name: 'Rajshahi' },
-    { name: 'Khulna' },
-    { name: 'Barishal' },
-    { name: 'Sylhet' },
-    { name: 'Rangpur' },
-    { name: 'Mymensingh' },
-  ];
-  selectedDivision: { name: string } | null = null;
+  selectedItem: string | undefined;
+  filteredLocationSuggestions: string[] = [];
+  locations: string[] = [];
+
+  selectedDrugItem: string | undefined;
+  filteredDrugSuggestions: string[] = [];
+  drugs: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +55,7 @@ export class SearchFieldComponent implements OnInit {
     private toastr: ToastrService,
   ) {
     this.searchForm = this.fb.group({
+      selectedDivision: [null],
       location: [''],
       medicine: [''],
     });
@@ -69,21 +70,18 @@ export class SearchFieldComponent implements OnInit {
     const locationValue = this.searchForm.value.location;
     const medicineValue = this.searchForm.value.medicine;
 
-    if (locationValue || medicineValue) {
+    if (medicineValue && !locationValue) {
+      this.formSubmit.emit({ location: '', medicine: medicineValue });
+    } else if (locationValue) {
       const formData = {
         location: locationValue,
-        medicine: medicineValue,
+        medicine: medicineValue || '',
       };
       this.formSubmit.emit(formData);
     } else {
       this.toastr.error('Please fill in at least one field before submitting.');
     }
   }
-
-  // for get all map location
-  selectedItem: string | undefined;
-  filteredLocationSuggestions: string[] = [];
-  locations: string[] = [];
 
   fetchLocations() {
     // @ts-ignore
@@ -100,16 +98,10 @@ export class SearchFieldComponent implements OnInit {
   }
 
   filterLocationSuggestions(event: { query: string }) {
-    // Filter suggestions from the fetched locations array
     this.filteredLocationSuggestions = this.locations.filter((location) =>
       location.toLowerCase().includes(event.query.toLowerCase()),
     );
   }
-
-  //for get all drugs
-  selectedDrugItem: string | undefined;
-  filteredDrugSuggestions: string[] = [];
-  drugs: string[] = [];
 
   fetchDrugs() {
     // @ts-ignore
@@ -126,9 +118,8 @@ export class SearchFieldComponent implements OnInit {
   }
 
   filterDrugSuggestions(event: { query: string }) {
-    // Filter suggestions from the fetched locations array
-    this.filteredDrugSuggestions = this.drugs.filter((location) =>
-      location.toLowerCase().includes(event.query.toLowerCase()),
+    this.filteredDrugSuggestions = this.drugs.filter((drug) =>
+      drug.toLowerCase().includes(event.query.toLowerCase()),
     );
   }
 }

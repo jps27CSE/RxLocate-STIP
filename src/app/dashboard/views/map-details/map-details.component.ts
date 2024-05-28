@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../../services/localStorage/local-storag
 import { MedicineService } from '../../../services/medicine/medicine.service';
 import { MapService } from '../../../services/map/map.service';
 import { InputTextModule } from 'primeng/inputtext';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-map-details',
@@ -22,6 +23,7 @@ import { InputTextModule } from 'primeng/inputtext';
     AutoCompleteModule,
     FormsModule,
     InputTextModule,
+    NgForOf,
   ],
   templateUrl: './map-details.component.html',
   styleUrl: './map-details.component.css',
@@ -47,8 +49,8 @@ export class MapDetailsComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.fetchLocations();
-    this.fetchDrugs();
+    // this.fetchLocations();
+    // this.fetchDrugs();
 
     console.log(this.drugs);
   }
@@ -57,27 +59,27 @@ export class MapDetailsComponent implements OnInit {
   filteredLocationSuggestions: string[] = [];
   locations: string[] = [];
 
-  fetchLocations() {
-    // @ts-ignore
-    this.getLocation.Get_All_Locations().subscribe(
-      (response: any) => {
-        this.locations = response.map((location: any) => location.name);
-      },
-      (error) => {
-        console.error('Error fetching locations:', error);
-        this.local.removeFromLocal();
-        this.router.navigate(['/login']);
-      },
-    );
-  }
+  // fetchLocations() {
+  //   // @ts-ignore
+  //   this.getLocation.Get_All_Locations().subscribe(
+  //     (response: any) => {
+  //       this.locations = response.map((location: any) => location.name);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching locations:', error);
+  //       this.local.removeFromLocal();
+  //       this.router.navigate(['/login']);
+  //     },
+  //   );
+  // }
 
-  filterLocationSuggestions(event: { query: string }) {
-    this.filteredLocationSuggestions = [];
-    // Filter suggestions from the fetched locations array
-    this.filteredLocationSuggestions = this.locations.filter((location) =>
-      location.toLowerCase().includes(event.query.toLowerCase()),
-    );
-  }
+  // filterLocationSuggestions(event: { query: string }) {
+  //   this.filteredLocationSuggestions = [];
+  //   // Filter suggestions from the fetched locations array
+  //   this.filteredLocationSuggestions = this.locations.filter((location) =>
+  //     location.toLowerCase().includes(event.query.toLowerCase()),
+  //   );
+  // }
 
   //for get all drugs
   selectedDrugItem: string | undefined;

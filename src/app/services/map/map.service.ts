@@ -15,7 +15,7 @@ export class MapService {
   ) {}
 
   Get_All_Locations(): Observable<any> | null {
-    const url = `${this.mapApiUrl}`;
+    const url = `${this.mapApiUrl}/locations`;
 
     const token = this.localStorageService.getToken();
 

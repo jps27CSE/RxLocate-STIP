@@ -23,45 +23,12 @@
   <div class="bg-white h-auto w-12/12 mx-auto rounded-lg">
     <p class="p-2 text-sm">Most Prescribed at (top-10)</p>
     <!--    list of data-->
-    <div class="p-2">
+    <div class="p-2" *ngFor="let data of fullData">
       <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Banani</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Gulshan-1</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Mohammadpur</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Vatara</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Mirpur-1</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Kolabagan</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Mohakhali</p>
-        <p><span class="font-bold">79</span> Doctors</p>
-      </div>
-
-      <div class="flex flex-row justify-between border-b-2 mb-2">
-        <p>Rampura</p>
-        <p><span class="font-bold">79</span> Doctors</p>
+        <p>{{ data.divisionName }}</p>
+        <p>
+          <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
+        </p>
       </div>
     </div>
   </div>

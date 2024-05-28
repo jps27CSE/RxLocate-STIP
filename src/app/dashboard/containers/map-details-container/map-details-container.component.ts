@@ -6,6 +6,7 @@ import { MapService } from '../../../services/map/map.service';
 import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
 import { SearchFieldComponent } from '../../views/search-field/search-field.component';
 import { PrescriptionService } from '../../../services/prescription/prescription.service';
+import { MedicineService } from '../../../services/medicine/medicine.service';
 
 @Component({
   selector: 'app-map-details-container',
@@ -23,11 +24,30 @@ export class MapDetailsContainerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService,
+    private medicineService: MedicineService,
     private prescriptionService: PrescriptionService,
     private local: LocalStorageService,
     private router: Router,
   ) {}
   ngOnInit(): void {}
+
+  getMedicine(medicine: string): void {
+    this.loader = true;
+
+    this.medicineService.Search_By_Drug(medicine)?.subscribe(
+      (data) => {
+        this.fullData = data;
+        console.log(this.fullData);
+        this.loader = false;
+      },
+      (error) => {
+        this.loader = false;
+        this.local.removeFromLocal();
+        this.router.navigate(['/login']);
+        console.error('Error fetching location medicine:', error);
+      },
+    );
+  }
 
   getLocationMedicine(location: string, drug: string): void {
     this.loader = true;
@@ -47,6 +67,7 @@ export class MapDetailsContainerComponent implements OnInit {
       },
     );
   }
+
   getAllPrescriptions(location: string): void {
     this.loader = true;
     const prescriptionObservable =
@@ -74,9 +95,10 @@ export class MapDetailsContainerComponent implements OnInit {
 
   onSubmit(event: { location: string; medicine: string }) {
     if (event.medicine) {
-      this.getLocationMedicine(event.location, event.medicine);
-    } else {
-      this.getAllPrescriptions(event.location);
+      this.getMedicine(event.medicine);
+      // } else {
+      //   this.getAllPrescriptions(event.location);
+      // }
     }
   }
 }

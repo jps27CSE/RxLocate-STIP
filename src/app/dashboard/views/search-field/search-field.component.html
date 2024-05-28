@@ -1,4 +1,6 @@
-<div class="bg-[#f2f6fc] h-32 mb-5 flex justify-center items-center">
+<div
+  class="bg-[#f2f6fc] h-32 mb-5 flex justify-center items-center lg:mt-0 mt-16"
+>
   <div
     class="bg-white w-full sm:w-10/12 md:w-7/12 lg:w-7/12 h-auto sm:h-20 rounded-full flex flex-col sm:flex-row justify-center items-center p-4 sm:p-2"
   >
@@ -7,19 +9,8 @@
       (ngSubmit)="onSubmit()"
       class="flex flex-col sm:flex-row flex-wrap justify-center items-center w-full"
     >
-      <p-dropdown
-        [options]="division"
-        [(ngModel)]="selectedDivision"
-        optionLabel="name"
-        placeholder="Select a City"
-        [style]="{
-          height: '40px'
-        }"
-        class="border-b border-gray-400 border-solid"
-      />
-      <div class="border-r-2 border-gray-400 h-16 ml-5 mr-5"></div>
       <p-autoComplete
-        class="autoComplete-field m-1 w-full sm:w-auto border-b border-gray-400 border-solid"
+        class="autoComplete-field w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
         formControlName="location"
         placeholder="Search by Location"
         [inputStyle]="{
@@ -27,26 +18,22 @@
           padding: '5px',
           margin: '0px 10px 0px 0px'
         }"
-        [(ngModel)]="selectedItem"
         [suggestions]="filteredLocationSuggestions"
         (completeMethod)="filterLocationSuggestions($event)"
       ></p-autoComplete>
-
       <p-autoComplete
-        class="autoComplete-field m-1 w-full sm:w-auto border-b border-gray-400 border-solid"
+        class="autoComplete-field w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
         formControlName="medicine"
         placeholder="Search by Drug"
         [inputStyle]="{
           borderBottom: '1px ',
           padding: '5px'
         }"
-        [(ngModel)]="selectedDrugItem"
         [suggestions]="filteredDrugSuggestions"
         (completeMethod)="filterDrugSuggestions($event)"
       ></p-autoComplete>
-
       <button
-        class="m-2 h-9 w-full sm:w-20 rounded-full btn-active btn-neutral"
+        class="m-2 h-9 w-full sm:w-20 rounded-full btn-active btn-neutral lg:mb-0 mb-16"
       >
         Search
       </button>
