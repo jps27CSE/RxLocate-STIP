@@ -1,4 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import {
   FormBuilder,
@@ -30,7 +38,7 @@ import { DropdownModule } from 'primeng/dropdown';
   templateUrl: './search-field.component.html',
   styleUrls: ['./search-field.component.css'],
 })
-export class SearchFieldComponent implements OnInit {
+export class SearchFieldComponent implements OnInit, OnChanges {
   @Output() formSubmit: EventEmitter<{
     location: string;
     medicine: string;
@@ -45,6 +53,7 @@ export class SearchFieldComponent implements OnInit {
   selectedDrugItem: string | undefined;
   filteredDrugSuggestions: string[] = [];
   drugs: string[] = [];
+  @Input() location!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -66,16 +75,22 @@ export class SearchFieldComponent implements OnInit {
     this.fetchDrugs();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['location'] && !changes['location'].firstChange) {
+      this.searchForm.get('location')?.setValue(this.location || '');
+    }
+  }
+
   onSubmit(): void {
     const locationValue = this.searchForm.value.location;
     const medicineValue = this.searchForm.value.medicine;
 
     if (medicineValue && !locationValue) {
       this.formSubmit.emit({ location: '', medicine: medicineValue });
-    } else if (locationValue) {
+    } else if (locationValue && medicineValue) {
       const formData = {
         location: locationValue,
-        medicine: medicineValue || '',
+        medicine: medicineValue,
       };
       this.formSubmit.emit(formData);
     } else {
@@ -83,11 +98,18 @@ export class SearchFieldComponent implements OnInit {
     }
   }
 
+  capitalizeFirstLetter(text: string): string {
+    if (!text) return text;
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
   fetchLocations() {
     // @ts-ignore
     this.getLocation.Get_All_Locations().subscribe(
       (response: any) => {
-        this.locations = response.map((location: any) => location.name);
+        this.locations = response.map((location: any) =>
+          this.capitalizeFirstLetter(location.divisionName),
+        );
       },
       (error) => {
         console.error('Error fetching locations:', error);

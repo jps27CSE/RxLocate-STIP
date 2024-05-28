@@ -31,7 +31,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         this.fullData?.locationLat || this.defaultLocationLat,
         this.fullData?.locationLng || this.defaultLocationLng,
       ],
-      zoom: this.fullData ? 10 : 10,
+      zoom: this.fullData ? 9 : 7,
     });
 
     L.tileLayer(
@@ -64,8 +64,8 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
     this.fullData?.forEach((location: any) => {
       const markerIcon = L.icon({
-        iconUrl: `https://static.vecteezy.com/system/resources/previews/028/251/987/original/doctor-3d-icon-illustration-free-png.png`,
-        iconSize: [70, 70],
+        iconUrl: `https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-512.png`,
+        iconSize: [50, 50],
         iconAnchor: [22, 41],
         popupAnchor: [1, -34],
         // shadowUrl: 'path_to_your_marker_icons/marker-shadow.png',

@@ -20,6 +20,7 @@ export class MapDetailsContainerComponent implements OnInit {
   medicine!: string;
   fullData!: any;
   loader!: boolean;
+  selectedLocation: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -94,11 +95,14 @@ export class MapDetailsContainerComponent implements OnInit {
   }
 
   onSubmit(event: { location: string; medicine: string }) {
-    if (event.medicine) {
+    if (event.medicine && event.location === '') {
       this.getMedicine(event.medicine);
-      // } else {
-      //   this.getAllPrescriptions(event.location);
-      // }
+    } else if (event.medicine && event.location) {
+      this.getLocationMedicine(event.location, event.medicine);
     }
+  }
+
+  onLocationClick(location: string): void {
+    this.selectedLocation = location;
   }
 }

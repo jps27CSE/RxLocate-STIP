@@ -30,11 +30,14 @@ import { NgForOf } from '@angular/common';
 })
 export class MapDetailsComponent implements OnInit {
   @Input() fullData!: any;
-  @Output() searchClicked: EventEmitter<{
-    location: string;
-    medicine: string;
-  }> = new EventEmitter();
-  protected searchForm: any;
+  // @Output() searchClicked: EventEmitter<{
+  //   location: string;
+  //   medicine: string;
+  // }> = new EventEmitter();
+  // protected searchForm: any;
+
+  @Output() locationClicked: EventEmitter<string> = new EventEmitter<string>();
+  searchForm: any;
 
   constructor(
     private fb: FormBuilder,
@@ -86,32 +89,36 @@ export class MapDetailsComponent implements OnInit {
   filteredDrugSuggestions: string[] = [];
   drugs: string[] = [];
 
-  fetchDrugs() {
-    // @ts-ignore
-    this.getDrugs.Get_All_Drugs().subscribe(
-      (response: any) => {
-        this.drugs = response.map((drug: any) => drug.name);
-      },
-      (error) => {
-        console.error('Error fetching drugs:', error);
-        this.local.removeFromLocal();
-        this.router.navigate(['/login']);
-      },
-    );
-  }
+  // fetchDrugs() {
+  //   // @ts-ignore
+  //   this.getDrugs.Get_All_Drugs().subscribe(
+  //     (response: any) => {
+  //       this.drugs = response.map((drug: any) => drug.name);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching drugs:', error);
+  //       this.local.removeFromLocal();
+  //       this.router.navigate(['/login']);
+  //     },
+  //   );
+  // }
 
-  filterDrugSuggestions(event: { query: string }) {
-    // Filter suggestions from the fetched locations array
-    this.filteredDrugSuggestions = this.drugs.filter((location) =>
-      location.toLowerCase().includes(event.query.toLowerCase()),
-    );
-  }
-  onSearchClicked() {
-    console.log('clicked');
-    if (this.searchForm.valid) {
-      this.searchClicked.emit(this.searchForm.value);
-    } else {
-      // Handle error or notify user if any field is empty
-    }
+  // filterDrugSuggestions(event: { query: string }) {
+  //   // Filter suggestions from the fetched locations array
+  //   this.filteredDrugSuggestions = this.drugs.filter((location) =>
+  //     location.toLowerCase().includes(event.query.toLowerCase()),
+  //   );
+  // }
+  // onSearchClicked() {
+  //   console.log('clicked');
+  //   if (this.searchForm.valid) {
+  //     this.searchClicked.emit(this.searchForm.value);
+  //   } else {
+  //     // Handle error or notify user if any field is empty
+  //   }
+  // }
+
+  onLocationClick(location: string): void {
+    this.locationClicked.emit(location);
   }
 }
