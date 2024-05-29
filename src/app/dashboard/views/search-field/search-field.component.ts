@@ -94,7 +94,7 @@ export class SearchFieldComponent implements OnInit, OnChanges {
       };
       this.formSubmit.emit(formData);
     } else {
-      this.toastr.error('Please fill in at least one field before submitting.');
+      this.toastr.error('Please fill in Drug field before submitting.');
     }
   }
 
