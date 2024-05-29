@@ -16,8 +16,10 @@
 
       <div class="mt-5 flex flex-row gap-16">
         <div>
-          <p>Prescribed by</p>
-          <p><span class="font-bold text-lg">359</span> Doctors</p>
+          <p>Prescribe Count</p>
+          <p>
+            <span class="font-bold text-lg">{{ totalPrescriptionCount }}</span>
+          </p>
         </div>
         <!--      <div>-->
         <!--        <p>Total Quantity</p>-->
@@ -25,22 +27,19 @@
         <!--      </div>-->
       </div>
     </div>
-
-    <!--  table of data info-->
+    <!-- table of data info -->
     @if (fullData) {
       <div
-        class="bg-white h-auto w-12/12 mx-auto rounded-lg"
+        class="bg-white h-[calc(70vh - 200px)] w-12/12 mx-auto rounded-lg overflow-y-auto"
         data-aos="zoom-in"
       >
         <p class="p-2 text-sm">Most Prescribed</p>
-        <!--    list of data-->
-        <div
-          class="p-2"
-          *ngFor="let data of fullData"
-          (click)="onLocationClick(data.divisionName)"
-        >
+        <!-- list of data -->
+        <div class="p-2">
           <div
             class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer"
+            *ngFor="let data of fullData"
+            (click)="onLocationClick(data.divisionName)"
           >
             @if (data.divisionName) {
               <p>{{ data.divisionName }}</p>

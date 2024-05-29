@@ -10,11 +10,10 @@
     ></app-map-details>
   </div>
 
-  @if (!loader) {
-    <div class="w-full">
-      <app-map-view [fullData]="fullData"></app-map-view>
-    </div>
-  } @else {
-    <p>loader</p>
-  }
+  <div class="w-full">
+    <app-map-view
+      [loaderState]="loader"
+      [onUpdatedData]="fullData"
+    ></app-map-view>
+  </div>
 </div>

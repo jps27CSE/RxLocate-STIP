@@ -15,7 +15,20 @@ import { geocoder } from 'leaflet-control-geocoder';
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
   map: any;
-  @Input() fullData!: any;
+  fullData: any;
+  markers: any;
+  @Input() set onUpdatedData(data: any) {
+    this.fullData = [...(data || [])];
+    console.log(this.fullData);
+    if (this.fullData.length) {
+      console.log(this.map);
+      this.updateMap();
+    }
+  }
+  loader: boolean = false;
+  @Input() set loaderState(state: boolean) {
+    this.loader = state;
+  }
   defaultLocationLat = 23.8058536;
   defaultLocationLng = 90.4143504;
 
@@ -31,7 +44,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         this.fullData?.locationLat || this.defaultLocationLat,
         this.fullData?.locationLng || this.defaultLocationLng,
       ],
-      zoom: this.fullData ? 9 : 7,
+      zoom: this.fullData ? 8 : 7,
     });
 
     L.tileLayer(
@@ -42,16 +55,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
       },
     ).addTo(this.map);
 
-    // (L.Control as any).geocoder().addTo(this.map)
-
-    // geocoder.on('markgeocode', function (event: any) {
-    //   const { latlng, name } = event.geocode;
-    //   console.log(
-    //     `Latitude: ${latlng.lat}, Longitude: ${latlng.lng}, Name: ${name}`,
-    //   );
-    // });
-
-    const markers = L.markerClusterGroup({
+    this.markers = L.markerClusterGroup({
       iconCreateFunction: function (cluster) {
         return L.divIcon({
           html:
@@ -61,6 +65,19 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         });
       },
     });
+
+    this.map.addLayer(this.markers);
+  }
+
+  private updateMap() {
+    this.markers.clearLayers();
+
+    if (this.fullData[0]?.locationName) {
+      this.map.setView(
+        new L.LatLng(this.fullData[0].lat, this.fullData[0].lng),
+        10,
+      );
+    }
 
     this.fullData?.forEach((location: any) => {
       const markerIcon = L.icon({
@@ -78,22 +95,19 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         `<div class="card-body h-32">
       <h2 class="text-2xl font-bold mx-auto">${location.divisionName ? location.divisionName : location.locationName}</h2>
       <p class="text-sm mx-auto">Prescribe Count: <span class="font-bold">${location.prescriptionCount}</span></p>
-<!--      <button class="btn btn-primary h-4">View Details</button>-->
     </div>`,
       );
-      markers.addLayer(marker);
+      this.markers.addLayer(marker);
     });
 
-    this.map.addLayer(markers);
-
     // Optionally, you can also add a circle for each location
-    // this.locations.forEach((location) => {
-    //   L.circle([location.lat, location.lng], {
-    //     color: '#c3e7ef',
-    //     fillColor: '#c3e7ef',
-    //     fillOpacity: 0.5,
-    //     radius: 50,
-    //   }).addTo(this.map);
-    // });
+    this.fullData?.forEach((location: any) => {
+      L.circle([location.lat, location.lng], {
+        color: '#c3e7ef',
+        fillColor: '#c3e7ef',
+        fillOpacity: 0.5,
+        radius: 50,
+      }).addTo(this.map);
+    });
   }
 }

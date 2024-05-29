@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import {
@@ -28,7 +36,7 @@ import { NgForOf } from '@angular/common';
   templateUrl: './map-details.component.html',
   styleUrl: './map-details.component.css',
 })
-export class MapDetailsComponent implements OnInit {
+export class MapDetailsComponent implements OnInit, OnChanges {
   @Input() fullData!: any;
   // @Output() searchClicked: EventEmitter<{
   //   location: string;
@@ -38,6 +46,7 @@ export class MapDetailsComponent implements OnInit {
 
   @Output() locationClicked: EventEmitter<string> = new EventEmitter<string>();
   searchForm: any;
+  totalPrescriptionCount: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +66,13 @@ export class MapDetailsComponent implements OnInit {
 
     console.log(this.drugs);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fullData'] && this.fullData) {
+      this.calculateTotalPrescriptionCount();
+    }
+  }
+
   // for get all map location
   selectedItem: string | undefined;
   filteredLocationSuggestions: string[] = [];
@@ -120,5 +136,17 @@ export class MapDetailsComponent implements OnInit {
 
   onLocationClick(location: string): void {
     this.locationClicked.emit(location);
+  }
+
+  calculateTotalPrescriptionCount(): void {
+    // Assuming fullData contains the array of prescription data
+    if (this.fullData) {
+      this.totalPrescriptionCount = this.fullData.reduce(
+        (total: any, data: { prescriptionCount: any }) =>
+          total + data.prescriptionCount,
+        0,
+      );
+    }
+    console.log('pres', this.totalPrescriptionCount);
   }
 }
