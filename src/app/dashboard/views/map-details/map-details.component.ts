@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DialogModule } from 'primeng/dialog';
 import {
   FormBuilder,
   FormsModule,
@@ -20,6 +21,7 @@ import { MedicineService } from '../../../services/medicine/medicine.service';
 import { MapService } from '../../../services/map/map.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgForOf } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-map-details',
@@ -32,6 +34,8 @@ import { NgForOf } from '@angular/common';
     FormsModule,
     InputTextModule,
     NgForOf,
+    DialogModule,
+    ButtonModule,
   ],
   templateUrl: './map-details.component.html',
   styleUrl: './map-details.component.css',
@@ -148,5 +152,11 @@ export class MapDetailsComponent implements OnInit, OnChanges {
       );
     }
     console.log('pres', this.totalPrescriptionCount);
+  }
+
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
   }
 }

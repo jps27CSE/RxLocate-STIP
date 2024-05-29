@@ -8,14 +8,14 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class MedicineService {
-  private mapApiUrl = `${environment.API_BASE_URL}/map`;
+  private mapApiUrl = `${environment.API_BASE_URL}`;
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService,
   ) {}
 
   Get_All_Drugs(): Observable<any> | null {
-    const url = `${this.mapApiUrl}/drugs`;
+    const url = `${this.mapApiUrl}/drug/drug-list`;
     const token = this.localStorageService.getToken();
     if (token) {
       const headers = new HttpHeaders({
@@ -29,7 +29,7 @@ export class MedicineService {
   }
 
   Search_By_Drug(drug: string): Observable<any> | null {
-    const url = `${this.mapApiUrl}/${drug}`;
+    const url = `${this.mapApiUrl}/map/${drug}`;
     const token = this.localStorageService.getToken();
     if (token) {
       const headers = new HttpHeaders({

@@ -10,7 +10,15 @@
       <!--    showing results-->
       @if (fullData) {
         <p class="font-bold">
-          Dhaka,<span>{{ fullData[0].drugName }}</span>
+          @if (fullData[0].districtId) {
+            {{ fullData[0].divisionName }},
+          }
+          <span>
+            <p-button
+              (click)="showDialog()"
+              [label]="fullData[0].drugName"
+            ></p-button>
+          </span>
         </p>
       }
 
@@ -29,24 +37,26 @@
       </div>
     </div>
     <!-- table of data info -->
-    @if (fullData) {
+    @if (fullData.length > 0) {
       <div
-        class="bg-white h-[calc(70vh - 200px)] w-12/12 mx-auto rounded-lg overflow-y-auto"
+        class="bg-white h-[calc(70vh - 200px)] w-12/12 mx-auto rounded-lg"
         data-aos="zoom-in"
       >
-        <p class="p-2 text-sm">Most Prescribed</p>
+        <p class="p-2 text-sm border-solid border-2 border-gray-200">
+          Most Prescribed
+        </p>
         <!-- list of data -->
-        <div class="p-2">
+        <div class="p-2 overflow-y-auto max-h-[30vh]">
           <div
             class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer"
             *ngFor="let data of fullData"
             (click)="onLocationClick(data.divisionName)"
           >
-            @if (data.divisionName) {
+            @if (data.divisionId) {
               <p>{{ data.divisionName }}</p>
             }
-            @if (data.locationName) {
-              <p>{{ data.locationName }}</p>
+            @if (data.districtId) {
+              <p>{{ data.districtName }}</p>
             }
             <p>
               <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
@@ -54,6 +64,8 @@
           </div>
         </div>
       </div>
+    } @else if (fullData.length < 1) {
+      <div>No Data</div>
     }
   </div>
 }
@@ -63,7 +75,35 @@
     class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
     data-aos="zoom-in"
   >
-    <h2 class="text-xl font-bold mb-4">No Data Available</h2>
-    <p class="text-lg">Please search for a drug to see the results.</p>
+    <div role="alert" class="alert alert-success">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current shrink-0 h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span class="text-white">
+        Please search for a drug to see the results.</span
+      >
+    </div>
   </div>
 }
+
+<!--modal-->
+<p-dialog
+  header="Ace"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="true"
+>
+  <p>Information</p>
+</p-dialog>

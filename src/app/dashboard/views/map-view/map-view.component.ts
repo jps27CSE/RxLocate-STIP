@@ -4,7 +4,6 @@ import 'leaflet.markercluster';
 import { DialogModule } from 'primeng/dialog';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
-import { geocoder } from 'leaflet-control-geocoder';
 
 @Component({
   selector: 'app-map-view',
@@ -17,6 +16,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   map: any;
   fullData: any;
   markers: any;
+  markerCluster: any;
   @Input() set onUpdatedData(data: any) {
     this.fullData = [...(data || [])];
     console.log(this.fullData);
@@ -44,7 +44,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         this.fullData?.locationLat || this.defaultLocationLat,
         this.fullData?.locationLng || this.defaultLocationLng,
       ],
-      zoom: this.fullData ? 8 : 7,
+      zoom: this.fullData ? 7 : 7,
     });
 
     L.tileLayer(
@@ -55,7 +55,8 @@ export class MapViewComponent implements OnInit, AfterViewInit {
       },
     ).addTo(this.map);
 
-    this.markers = L.markerClusterGroup({
+    this.markers = L.layerGroup();
+    this.markerCluster = L.markerClusterGroup({
       iconCreateFunction: function (cluster) {
         return L.divIcon({
           html:
@@ -71,8 +72,13 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
   private updateMap() {
     this.markers.clearLayers();
+    this.markerCluster.clearLayers();
 
-    if (this.fullData[0]?.locationName) {
+    let useCluster = this.fullData.some(
+      (location: any) => location.districtName,
+    );
+
+    if (this.fullData[0]?.districtName) {
       this.map.setView(
         new L.LatLng(this.fullData[0].lat, this.fullData[0].lng),
         10,
@@ -85,7 +91,6 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         iconSize: [50, 50],
         iconAnchor: [22, 41],
         popupAnchor: [1, -34],
-        // shadowUrl: 'path_to_your_marker_icons/marker-shadow.png',
         shadowSize: [41, 41],
       });
 
@@ -93,12 +98,23 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         icon: markerIcon,
       }).bindPopup(
         `<div class="card-body h-32">
-      <h2 class="text-2xl font-bold mx-auto">${location.divisionName ? location.divisionName : location.locationName}</h2>
-      <p class="text-sm mx-auto">Prescribe Count: <span class="font-bold">${location.prescriptionCount}</span></p>
-    </div>`,
+          <h2 class="text-2xl font-bold mx-auto">${location.divisionName ? location.divisionName : location.districtName}</h2>
+          <p class="text-sm mx-auto">Prescribe Count: <span class="font-bold">${location.prescriptionCount}</span></p>
+        </div>`,
       );
-      this.markers.addLayer(marker);
+
+      if (useCluster) {
+        this.markerCluster.addLayer(marker);
+      } else {
+        this.markers.addLayer(marker);
+      }
     });
+
+    if (useCluster) {
+      this.map.addLayer(this.markerCluster);
+    } else {
+      this.map.addLayer(this.markers);
+    }
 
     // Optionally, you can also add a circle for each location
     this.fullData?.forEach((location: any) => {

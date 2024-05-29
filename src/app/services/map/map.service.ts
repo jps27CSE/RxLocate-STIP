@@ -8,14 +8,14 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class MapService {
-  private mapApiUrl = `${environment.API_BASE_URL}/map`;
+  private mapApiUrl = `${environment.API_BASE_URL}`;
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService,
   ) {}
 
   Get_All_Locations(): Observable<any> | null {
-    const url = `${this.mapApiUrl}/divisions`;
+    const url = `${this.mapApiUrl}/div/division-list`;
 
     const token = this.localStorageService.getToken();
 
@@ -34,7 +34,7 @@ export class MapService {
     location: string,
     medicine: string,
   ): Observable<any> | null {
-    const url = `${this.mapApiUrl}/select/${medicine}/${location}`;
+    const url = `${this.mapApiUrl}/map/select/${medicine}/${location}`;
 
     const token = this.localStorageService.getToken();
 
