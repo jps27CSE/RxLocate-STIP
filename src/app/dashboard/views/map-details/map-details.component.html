@@ -181,7 +181,14 @@
   [maximizable]="true"
 >
   <div class="overflow-x-auto">
+    <div class="mb-4 flex items-center">
+      <label for="divisionToggle" class="mr-4 font-semibold"
+        >Show by Division:</label
+      >
+      <input id="divisionToggle" type="checkbox" class="toggle" checked />
+    </div>
     <p class="text-lg font-bold mb-4">Total Doctors: {{ doctorData.length }}</p>
+
     <table class="table">
       <!-- head -->
       <thead>
