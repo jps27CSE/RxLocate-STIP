@@ -140,31 +140,35 @@
   [(visible)]="drugDialogVisible"
   [style]="{ width: '50rem' }"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-  [maximizable]="true"
 >
-  <!--  <div class="bg-white shadow-md rounded-lg p-6">-->
-  <!--    <h2 class="text-2xl mb-4">{{ drugInfo.drugName }}</h2>-->
-  <!--    <div class="flex items-center mb-2">-->
-  <!--      <i class="text-blue-500 mr-2 fas fa-info-circle"></i>-->
-  <!--      <span class="font-bold mr-2">Generic Name:</span>-->
-  <!--      <span>{{ drugInfo.generic }}</span>-->
-  <!--    </div>-->
-  <!--    <div class="flex items-center mb-2">-->
-  <!--      <i class="text-blue-500 mr-2 fas fa-tablets"></i>-->
-  <!--      <span class="font-bold mr-2">Formulation:</span>-->
-  <!--      <span>{{ drugInfo.drugFormation }}</span>-->
-  <!--    </div>-->
-  <!--    <div class="flex items-center mb-2">-->
-  <!--      <i class="text-blue-500 mr-2 fas fa-weight"></i>-->
-  <!--      <span class="font-bold mr-2">Strength:</span>-->
-  <!--      <span>{{ drugInfo.drugStrength }}</span>-->
-  <!--    </div>-->
-  <!--    <div class="flex items-center">-->
-  <!--      <i class="text-blue-500 mr-2 fas fa-industry"></i>-->
-  <!--      <span class="font-bold mr-2">Vendor:</span>-->
-  <!--      <span>{{ drugInfo.vendor }}</span>-->
-  <!--    </div>-->
-  <!--  </div>-->
+  <div class="stats shadow">
+    <div class="stat">
+      <div class="stat-figure text-primary"></div>
+      <div class="stat-title">Drug Name:</div>
+      <div class="stat-value text-primary">{{ medicineInfoData.drugName }}</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-figure text-secondary"></div>
+      <div class="stat-title">Generic Name:</div>
+      <div class="stat-value text-secondary">
+        {{ medicineInfoData.generic }}
+      </div>
+      <div class="stat-desc">
+        <div class="stat-desc"></div>
+        <div class="stat-desc text-md font-bold">
+          Formulation: {{ medicineInfoData.drugFormation }}
+        </div>
+        <div class="stat-desc text-md font-bold">
+          Strength: {{ medicineInfoData.drugStrength }}
+        </div>
+        <div class="stat-desc text-md font-bold">
+          Vendor: {{ medicineInfoData.vendor }}
+        </div>
+      </div>
+      <!-- Add more relevant information from API response here -->
+    </div>
+  </div>
 </p-dialog>
 
 <!--modal for doctor information-->
@@ -177,6 +181,7 @@
   [maximizable]="true"
 >
   <div class="overflow-x-auto">
+    <p class="text-lg font-bold mb-4">Total Doctors: {{ doctorData.length }}</p>
     <table class="table">
       <!-- head -->
       <thead>

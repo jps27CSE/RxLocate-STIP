@@ -28,4 +28,6 @@ export class DoctorService {
       return null;
     }
   }
+
+  // Search_by_divisionName();
 }

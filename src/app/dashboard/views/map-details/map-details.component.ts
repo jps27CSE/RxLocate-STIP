@@ -44,6 +44,7 @@ import { DoctorService } from '../../../services/doctor/doctor.service';
 export class MapDetailsComponent implements OnInit, OnChanges {
   @Input() fullData!: any;
   doctorData: any[] = [];
+  medicineInfoData: any = {};
 
   @Output() locationClicked: EventEmitter<string> = new EventEmitter<string>();
   searchForm: any;
@@ -52,7 +53,7 @@ export class MapDetailsComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private local: LocalStorageService,
-    private getDrugs: MedicineService,
+    private medicineService: MedicineService,
     private getLocation: MapService,
     private getDoctorInfo: DoctorService,
     private router: Router,
@@ -67,9 +68,12 @@ export class MapDetailsComponent implements OnInit, OnChanges {
     if (changes['fullData'] && this.fullData) {
       this.calculateTotalPrescriptionCount();
 
-      // Check if drugName exists and call Search_by_Drug
       if (this.fullData[0] && this.fullData[0].drugName) {
         this.searchByDrug(this.fullData[0].drugName);
+      }
+
+      if (this.fullData[0] && this.fullData[0].drugName) {
+        this.medicineInfo(this.fullData[0].drugName);
       }
     }
   }
@@ -108,10 +112,22 @@ export class MapDetailsComponent implements OnInit, OnChanges {
     this.getDoctorInfo.Search_by_Drug(drug).subscribe(
       (response) => {
         this.doctorData = response;
-        console.log('Doctor data', response);
       },
       (error) => {
         console.error('Error fetching doctor data', error);
+      },
+    );
+  }
+
+  //medicine information
+  medicineInfo(drug: string): void {
+    this.medicineService.Medicine_Info(drug)?.subscribe(
+      (response) => {
+        this.medicineInfoData = response;
+        console.log('from medicine information', this.medicineInfoData);
+      },
+      (error) => {
+        console.error('Error fetching medicineInfo', error);
       },
     );
   }

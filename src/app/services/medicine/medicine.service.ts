@@ -41,4 +41,20 @@ export class MedicineService {
       return null;
     }
   }
+
+  Medicine_Info(drug: string): Observable<any> | null {
+    const url = `${this.mapApiUrl}/drug/drug-info/${drug}`;
+
+    const token = this.localStorageService.getToken();
+
+    if (token) {
+      const headers = new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      });
+      return this.http.get(url, { headers });
+    } else {
+      console.log('Token not available');
+      return null;
+    }
+  }
 }

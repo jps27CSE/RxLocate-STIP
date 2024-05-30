@@ -98,9 +98,9 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         icon: markerIcon,
       }).bindPopup(
         `<div class="card-body h-32">
-          <h2 class="text-2xl font-bold mx-auto">${location.divisionName ? location.divisionName : location.districtName}</h2>
-          <p class="text-sm mx-auto">Prescribe Count: <span class="font-bold">${location.prescriptionCount}</span></p>
-        </div>`,
+    <h2 class="text-2xl font-bold mx-auto">${location.districtName ? location.districtName : location.divisionName}</h2>
+    <p class="text-sm mx-auto">Prescribe Count: <span class="font-bold">${location.prescriptionCount}</span></p>
+  </div>`,
       );
 
       if (useCluster) {
