@@ -22,6 +22,7 @@ import { MapService } from '../../../services/map/map.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgForOf } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { DoctorService } from '../../../services/doctor/doctor.service';
 
 @Component({
   selector: 'app-map-details',
@@ -42,11 +43,7 @@ import { ButtonModule } from 'primeng/button';
 })
 export class MapDetailsComponent implements OnInit, OnChanges {
   @Input() fullData!: any;
-  // @Output() searchClicked: EventEmitter<{
-  //   location: string;
-  //   medicine: string;
-  // }> = new EventEmitter();
-  // protected searchForm: any;
+  doctorData: any[] = [];
 
   @Output() locationClicked: EventEmitter<string> = new EventEmitter<string>();
   searchForm: any;
@@ -57,6 +54,7 @@ export class MapDetailsComponent implements OnInit, OnChanges {
     private local: LocalStorageService,
     private getDrugs: MedicineService,
     private getLocation: MapService,
+    private getDoctorInfo: DoctorService,
     private router: Router,
   ) {
     this.searchForm = this.fb.group({
@@ -64,86 +62,25 @@ export class MapDetailsComponent implements OnInit, OnChanges {
       medicine: ['', [Validators.required]],
     });
   }
-  ngOnInit() {
-    // this.fetchLocations();
-    // this.fetchDrugs();
-
-    console.log(this.drugs);
-  }
-
+  ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['fullData'] && this.fullData) {
       this.calculateTotalPrescriptionCount();
+
+      // Check if drugName exists and call Search_by_Drug
+      if (this.fullData[0] && this.fullData[0].drugName) {
+        this.searchByDrug(this.fullData[0].drugName);
+      }
     }
   }
 
-  // for get all map location
-  selectedItem: string | undefined;
-  filteredLocationSuggestions: string[] = [];
-  locations: string[] = [];
-
-  // fetchLocations() {
-  //   // @ts-ignore
-  //   this.getLocation.Get_All_Locations().subscribe(
-  //     (response: any) => {
-  //       this.locations = response.map((location: any) => location.name);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching locations:', error);
-  //       this.local.removeFromLocal();
-  //       this.router.navigate(['/login']);
-  //     },
-  //   );
-  // }
-
-  // filterLocationSuggestions(event: { query: string }) {
-  //   this.filteredLocationSuggestions = [];
-  //   // Filter suggestions from the fetched locations array
-  //   this.filteredLocationSuggestions = this.locations.filter((location) =>
-  //     location.toLowerCase().includes(event.query.toLowerCase()),
-  //   );
-  // }
-
-  //for get all drugs
-  selectedDrugItem: string | undefined;
-  filteredDrugSuggestions: string[] = [];
   drugs: string[] = [];
-
-  // fetchDrugs() {
-  //   // @ts-ignore
-  //   this.getDrugs.Get_All_Drugs().subscribe(
-  //     (response: any) => {
-  //       this.drugs = response.map((drug: any) => drug.name);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching drugs:', error);
-  //       this.local.removeFromLocal();
-  //       this.router.navigate(['/login']);
-  //     },
-  //   );
-  // }
-
-  // filterDrugSuggestions(event: { query: string }) {
-  //   // Filter suggestions from the fetched locations array
-  //   this.filteredDrugSuggestions = this.drugs.filter((location) =>
-  //     location.toLowerCase().includes(event.query.toLowerCase()),
-  //   );
-  // }
-  // onSearchClicked() {
-  //   console.log('clicked');
-  //   if (this.searchForm.valid) {
-  //     this.searchClicked.emit(this.searchForm.value);
-  //   } else {
-  //     // Handle error or notify user if any field is empty
-  //   }
-  // }
 
   onLocationClick(location: string): void {
     this.locationClicked.emit(location);
   }
 
   calculateTotalPrescriptionCount(): void {
-    // Assuming fullData contains the array of prescription data
     if (this.fullData) {
       this.totalPrescriptionCount = this.fullData.reduce(
         (total: any, data: { prescriptionCount: any }) =>
@@ -154,9 +91,28 @@ export class MapDetailsComponent implements OnInit, OnChanges {
     console.log('pres', this.totalPrescriptionCount);
   }
 
-  visible: boolean = false;
+  drugDialogVisible: boolean = false;
+  doctorDialogVisible: boolean = false;
 
-  showDialog() {
-    this.visible = true;
+  showDrugDialog() {
+    this.drugDialogVisible = true;
+  }
+
+  showDoctorDialog() {
+    this.doctorDialogVisible = true;
+  }
+
+  // doctor search by drug
+  searchByDrug(drug: string): void {
+    // @ts-ignore
+    this.getDoctorInfo.Search_by_Drug(drug).subscribe(
+      (response) => {
+        this.doctorData = response;
+        console.log('Doctor data', response);
+      },
+      (error) => {
+        console.error('Error fetching doctor data', error);
+      },
+    );
   }
 }

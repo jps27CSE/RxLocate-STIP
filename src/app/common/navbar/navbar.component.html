@@ -1,45 +1,12 @@
-<!--<div>-->
-<!--  <div class="navbar bg-base-100">-->
-<!--    <div class="flex-1">-->
-<!--      <img-->
-<!--        routerLink="/"-->
-<!--        ngSrc="../assets/home-logo.png"-->
-<!--        height="54"-->
-<!--        width="52"-->
-<!--        alt="home logo"-->
-<!--      />-->
-<!--      <a class="btn btn-ghost text-xl" routerLink="/">RxLocate</a>-->
-<!--    </div>-->
-<!--    <div class="flex-none">-->
-<!--      <ul class="menu menu-horizontal px-1">-->
-<!--        <li>-->
-<!--          <a-->
-<!--            routerLink="/"-->
-<!--            class="font-bold text-xl underline underline-offset-1"-->
-<!--            >Home</a-->
-<!--          >-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <a-->
-<!--            [routerLink]="['login']"-->
-<!--            class="font-bold text-xl underline underline-offset-1"-->
-<!--            >Login</a-->
-<!--          >-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
 <div
-  class="navbar h-3 bg-gradient-to-r from-blue-50 to-green-50 mb-5 shadow-xl w-11/12 mx-auto rounded-lg"
+  class="navbar h-3 bg-[#f2f6fc] mb-5 shadow-xl w-11/12 mx-auto rounded-lg"
   data-aos="fade-down"
 >
   <div class="flex-1">
     <img
       routerLink="/"
       src="../assets/home-logo.png"
-      class="w-16 p-2"
+      class="w-12 p-2"
       alt="home logo"
       routerLink="/"
     />
@@ -60,7 +27,7 @@
       <li *ngIf="isLoggedIn()">
         <!-- Show Logout button if user is logged in -->
         <button
-          class="border-none font-bold btn bg-red-300 text-black lg:w-36 lg:h-12 rounded-lg shadow-md"
+          class="border-none font-bold flex justify-center bg-red-300 text-black lg:w-20 lg:h-9 rounded-lg shadow-md"
           (click)="logout()"
         >
           Logout
@@ -69,7 +36,7 @@
       <li *ngIf="!isLoggedIn()">
         <a
           [routerLink]="['login']"
-          class="border-none font-bold btn bg-green-300 text-black lg:w-36 h-12 rounded-lg shadow-md"
+          class="border-none font-bold flex justify-center bg-green-300 text-black lg:w-20 h-9 rounded-lg shadow-md"
           >Login</a
         >
       </li>

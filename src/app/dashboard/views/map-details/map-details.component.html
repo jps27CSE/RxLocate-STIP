@@ -9,17 +9,35 @@
       <p class="text-sm">Showing Result for</p>
       <!--    showing results-->
       @if (fullData) {
-        <p class="font-bold">
-          @if (fullData[0].districtId) {
-            {{ fullData[0].divisionName }},
-          }
-          <span>
-            <p-button
-              (click)="showDialog()"
-              [label]="fullData[0].drugName"
-            ></p-button>
-          </span>
-        </p>
+        <div>
+          <div class="flex items-center mt-2">
+            <p class="font-bold mr-2">
+              @if (fullData[0].districtId) {
+                {{ fullData[0].divisionName }},
+              }
+            </p>
+            <span class="flex items-center">
+              <p-button
+                (click)="showDrugDialog()"
+                [label]="fullData[0].drugName"
+                [style]="{
+                  padding: '5px',
+                  height: '25px',
+                  backgroundColor: '#f55a21',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }"
+              >
+                <img
+                  src="assets/medicine.svg"
+                  alt="Medicine Icon"
+                  style="width: 20px; height: 20px; margin-right: 5px"
+                />
+              </p-button>
+            </span>
+          </div>
+        </div>
       }
 
       <div class="mt-5 flex flex-row gap-16">
@@ -67,6 +85,25 @@
     } @else if (fullData.length < 1) {
       <div>No Data</div>
     }
+
+    <p-button
+      (click)="showDoctorDialog()"
+      label="Doctor Information"
+      class="ml-2"
+      [style]="{
+        padding: '5px',
+        height: '35px',
+        marginTop: '10px',
+        backgroundColor: '#00A96E',
+        color: 'white'
+      }"
+    >
+      <img
+        src="assets/doctor.svg"
+        alt="Medicine Icon"
+        style="width: 20px; height: 20px; margin-right: 5px"
+      />
+    </p-button>
   </div>
 }
 
@@ -78,7 +115,7 @@
     <div role="alert" class="alert alert-success">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="stroke-current shrink-0 h-6 w-6"
+        class="stroke-current shrink-0 h-6 w-6 text-white"
         fill="none"
         viewBox="0 0 24 24"
       >
@@ -96,14 +133,97 @@
   </div>
 }
 
-<!--modal-->
+<!--modal for drug information-->
 <p-dialog
-  header="Ace"
+  header="Drug Information"
   [modal]="true"
-  [(visible)]="visible"
+  [(visible)]="drugDialogVisible"
   [style]="{ width: '50rem' }"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
   [maximizable]="true"
 >
-  <p>Information</p>
+  <!--  <div class="bg-white shadow-md rounded-lg p-6">-->
+  <!--    <h2 class="text-2xl mb-4">{{ drugInfo.drugName }}</h2>-->
+  <!--    <div class="flex items-center mb-2">-->
+  <!--      <i class="text-blue-500 mr-2 fas fa-info-circle"></i>-->
+  <!--      <span class="font-bold mr-2">Generic Name:</span>-->
+  <!--      <span>{{ drugInfo.generic }}</span>-->
+  <!--    </div>-->
+  <!--    <div class="flex items-center mb-2">-->
+  <!--      <i class="text-blue-500 mr-2 fas fa-tablets"></i>-->
+  <!--      <span class="font-bold mr-2">Formulation:</span>-->
+  <!--      <span>{{ drugInfo.drugFormation }}</span>-->
+  <!--    </div>-->
+  <!--    <div class="flex items-center mb-2">-->
+  <!--      <i class="text-blue-500 mr-2 fas fa-weight"></i>-->
+  <!--      <span class="font-bold mr-2">Strength:</span>-->
+  <!--      <span>{{ drugInfo.drugStrength }}</span>-->
+  <!--    </div>-->
+  <!--    <div class="flex items-center">-->
+  <!--      <i class="text-blue-500 mr-2 fas fa-industry"></i>-->
+  <!--      <span class="font-bold mr-2">Vendor:</span>-->
+  <!--      <span>{{ drugInfo.vendor }}</span>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</p-dialog>
+
+<!--modal for doctor information-->
+<p-dialog
+  header="Doctor Information"
+  [modal]="true"
+  [(visible)]="doctorDialogVisible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="true"
+>
+  <div class="overflow-x-auto">
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>BMDC</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <tr *ngFor="let doctor of doctorData">
+          <th></th>
+          <td>
+            <div class="flex items-center gap-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/028/251/987/original/doctor-3d-icon-illustration-free-png.png"
+                    alt="Doctor Icon"
+                  />
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{ doctor.name }}</div>
+                <div class="text-sm opacity-50">Bangladesh</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            {{ doctor.bmdc }}
+          </td>
+          <th>
+            <button class="btn btn-ghost btn-xs">details</button>
+          </th>
+        </tr>
+      </tbody>
+      <!-- foot -->
+      <tfoot>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>BMDC</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </p-dialog>

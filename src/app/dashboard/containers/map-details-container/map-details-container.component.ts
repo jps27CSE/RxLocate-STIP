@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MapService } from '../../../services/map/map.service';
 import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
 import { SearchFieldComponent } from '../../views/search-field/search-field.component';
-import { PrescriptionService } from '../../../services/prescription/prescription.service';
 import { MedicineService } from '../../../services/medicine/medicine.service';
 
 @Component({
@@ -26,7 +25,6 @@ export class MapDetailsContainerComponent implements OnInit {
     private route: ActivatedRoute,
     private mapService: MapService,
     private medicineService: MedicineService,
-    private prescriptionService: PrescriptionService,
     private local: LocalStorageService,
     private router: Router,
   ) {}
@@ -68,31 +66,6 @@ export class MapDetailsContainerComponent implements OnInit {
       },
     );
   }
-
-  // getAllPrescriptions(location: string): void {
-  //   this.loader = true;
-  //   const prescriptionObservable =
-  //     this.prescriptionService.Get_All_Prescription(location);
-  //   if (prescriptionObservable) {
-  //     prescriptionObservable.subscribe(
-  //       (data) => {
-  //         // Handle the response data here
-  //         this.fullData = data;
-  //         this.loader = false;
-  //         console.log(data);
-  //       },
-  //       (error) => {
-  //         this.loader = false;
-  //         this.local.removeFromLocal();
-  //         this.router.navigate(['/login']);
-  //         console.error('Error fetching prescriptions:', error);
-  //       },
-  //     );
-  //   } else {
-  //     this.loader = false;
-  //     console.error('No token available to fetch prescriptions');
-  //   }
-  // }
 
   onSubmit(event: { location: string; medicine: string }) {
     if (event.medicine && event.location === '') {
