@@ -6,8 +6,16 @@
     <div></div>
     <!-- location -->
     <div class="mb-5" data-aos="zoom-in">
-      <p class="text-sm">Showing Result for</p>
-      <!--    showing results-->
+      <div class="flex flex-row justify-between mx-auto my-auto">
+        <p class="text-sm">Showing Result for</p>
+        <img
+          src="assets/download.svg"
+          alt="download button"
+          class="w-7 bg-green-700 rounded-lg cursor-pointer"
+          (click)="downloadClick()"
+        />
+      </div>
+      <!-- showing results -->
       @if (fullData) {
         <div>
           <div class="flex items-center mt-2">
@@ -48,10 +56,6 @@
             (times)
           </p>
         </div>
-        <!--      <div>-->
-        <!--        <p>Total Quantity</p>-->
-        <!--        <p><span class="font-bold text-lg">2,86,76</span> (pieces)</p>-->
-        <!--      </div>-->
       </div>
     </div>
     <!-- table of data info -->
@@ -100,7 +104,7 @@
     >
       <img
         src="assets/doctor.svg"
-        alt="Medicine Icon"
+        alt="Doctor Icon"
         style="width: 20px; height: 20px; margin-right: 5px"
       />
     </p-button>
@@ -145,13 +149,15 @@
     <div class="stat">
       <div class="stat-figure text-primary"></div>
       <div class="stat-title">Drug Name:</div>
-      <div class="stat-value text-primary">{{ medicineInfoData.drugName }}</div>
+      <div class="stat-value text-emerald-500">
+        {{ medicineInfoData.drugName }}
+      </div>
     </div>
 
     <div class="stat">
       <div class="stat-figure text-secondary"></div>
       <div class="stat-title">Generic Name:</div>
-      <div class="stat-value text-secondary">
+      <div class="stat-value text-primary">
         {{ medicineInfoData.generic }}
       </div>
       <div class="stat-desc">
@@ -166,7 +172,6 @@
           Vendor: {{ medicineInfoData.vendor }}
         </div>
       </div>
-      <!-- Add more relevant information from API response here -->
     </div>
   </div>
 </p-dialog>
@@ -181,11 +186,20 @@
   [maximizable]="true"
 >
   <div class="overflow-x-auto">
-    <div class="mb-4 flex items-center">
-      <label for="divisionToggle" class="mr-4 font-semibold"
-        >Show by Division:</label
-      >
-      <input id="divisionToggle" type="checkbox" class="toggle" checked />
+    <div class="flex flex-wrap gap-2 mb-4">
+      <p-chip
+        class="cursor-pointer"
+        *ngFor="let division of divisions"
+        label="{{ division }}"
+        (click)="filterByDivision(division)"
+        [class.selected]="selectedDivision === division"
+      ></p-chip>
+      <p-chip
+        class="cursor-pointer"
+        label="All"
+        (click)="filterByDivision('All')"
+        [class.selected]="selectedDivision === 'All'"
+      ></p-chip>
     </div>
     <p class="text-lg font-bold mb-4">Total Doctors: {{ doctorData.length }}</p>
 
@@ -201,7 +215,7 @@
       </thead>
       <tbody>
         <!-- row 1 -->
-        <tr *ngFor="let doctor of doctorData">
+        <tr *ngFor="let doctor of filteredDoctorData">
           <th></th>
           <td>
             <div class="flex items-center gap-3">
@@ -214,16 +228,18 @@
                 </div>
               </div>
               <div>
-                <div class="font-bold">{{ doctor.name }}</div>
-                <div class="text-sm opacity-50">Bangladesh</div>
+                <div class="font-bold">{{ doctor.doctorName }}</div>
+                <div class="text-sm text-blue-500">
+                  {{ doctor.divisionName }}
+                </div>
               </div>
             </div>
           </td>
           <td>
-            {{ doctor.bmdc }}
+            {{ doctor.doctorBMDC }}
           </td>
           <th>
-            <button class="btn btn-ghost btn-xs">details</button>
+            <!--            <button class="btn btn-ghost btn-xs">details</button>-->
           </th>
         </tr>
       </tbody>
