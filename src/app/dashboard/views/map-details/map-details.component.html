@@ -1,48 +1,241 @@
-<div
-  class="shadow-xl rounded-l-lg bg-gradient-to-r from-blue-50 to-green-50 h-[70vh] lg:p-14 p-7"
->
-  <!--  icon with text-->
-  <div></div>
-  <!--  location-->
-  <div class="mb-5">
-    <h2 class="text-2xl font-bold text-gray-600 mb-2">Location:</h2>
-    <div class="flex flex-row">
-      <img class="w-10 h-10 my-auto" src="assets/location-pin.png" />
-      <input
-        class="input input-bordered"
-        disabled
-        [value]="fullData?.locationName"
-      />
-    </div>
-  </div>
-  <!--  medicine or generics-->
-  <div class="mt-5">
-    <h2 class="text-2xl font-bold text-gray-600 mb-2">Medicine or Generics:</h2>
-    <div class="flex flex-row">
-      <img class="w-10 h-10 my-auto" src="assets/drugs.png" />
-      <input
-        class="input input-bordered"
-        disabled
-        [value]="fullData?.drugName"
-      />
-    </div>
-  </div>
-  <!--  prescribed count-->
-  <div class="mt-5">
-    <h2 class="text-2xl font-bold text-gray-600 mb-2">Prescribed Count:</h2>
-    <div class="flex flex-row">
-      <img class="w-10 h-10 my-auto" src="assets/prescribe.png" />
-      <input
-        class="input input-bordered"
-        disabled
-        [value]="fullData?.prescriptionCount"
-      />
-    </div>
-  </div>
-  <button
-    routerLink="/dashboard/search"
-    class="btn mt-10 border-none bg-blue-200 w-4/12 mx-auto"
+@if (fullData) {
+  <div
+    class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
   >
-    Back
-  </button>
-</div>
+    <!-- icon with text -->
+    <div></div>
+    <!-- location -->
+    <div class="mb-5" data-aos="zoom-in">
+      <p class="text-sm">Showing Result for</p>
+      <!--    showing results-->
+      @if (fullData) {
+        <div>
+          <div class="flex items-center mt-2">
+            <p class="font-bold mr-2">
+              @if (fullData[0].districtId) {
+                {{ fullData[0].divisionName }},
+              }
+            </p>
+            <span class="flex items-center">
+              <p-button
+                (click)="showDrugDialog()"
+                [label]="fullData[0].drugName"
+                [style]="{
+                  padding: '5px',
+                  height: '25px',
+                  backgroundColor: '#f55a21',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }"
+              >
+                <img
+                  src="assets/medicine.svg"
+                  alt="Medicine Icon"
+                  style="width: 20px; height: 20px; margin-right: 5px"
+                />
+              </p-button>
+            </span>
+          </div>
+        </div>
+      }
+
+      <div class="mt-5 flex flex-row gap-16">
+        <div>
+          <p>Prescribe Count</p>
+          <p>
+            <span class="font-bold text-lg">{{ totalPrescriptionCount }}</span>
+            (times)
+          </p>
+        </div>
+        <!--      <div>-->
+        <!--        <p>Total Quantity</p>-->
+        <!--        <p><span class="font-bold text-lg">2,86,76</span> (pieces)</p>-->
+        <!--      </div>-->
+      </div>
+    </div>
+    <!-- table of data info -->
+    @if (fullData.length > 0) {
+      <div
+        class="bg-white h-[calc(70vh - 200px)] w-12/12 mx-auto rounded-lg"
+        data-aos="zoom-in"
+      >
+        <p class="p-2 text-sm border-solid border-2 border-gray-200">
+          Most Prescribed
+        </p>
+        <!-- list of data -->
+        <div class="p-2 overflow-y-auto max-h-[30vh]">
+          <div
+            class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+            *ngFor="let data of fullData"
+            (click)="onLocationClick(data.divisionName)"
+          >
+            @if (data.divisionId) {
+              <p>{{ data.divisionName }}</p>
+            }
+            @if (data.districtId) {
+              <p>{{ data.districtName }}</p>
+            }
+            <p>
+              <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
+            </p>
+          </div>
+        </div>
+      </div>
+    } @else if (fullData.length < 1) {
+      <div>No Data</div>
+    }
+
+    <p-button
+      (click)="showDoctorDialog()"
+      label="Doctor Information"
+      class="ml-2"
+      [style]="{
+        padding: '5px',
+        height: '35px',
+        marginTop: '10px',
+        backgroundColor: '#00A96E',
+        color: 'white'
+      }"
+    >
+      <img
+        src="assets/doctor.svg"
+        alt="Medicine Icon"
+        style="width: 20px; height: 20px; margin-right: 5px"
+      />
+    </p-button>
+  </div>
+}
+
+@if (!fullData) {
+  <div
+    class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
+    data-aos="zoom-in"
+  >
+    <div role="alert" class="alert alert-success">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current shrink-0 h-6 w-6 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span class="text-white">
+        Please search for a drug to see the results.</span
+      >
+    </div>
+  </div>
+}
+
+<!--modal for drug information-->
+<p-dialog
+  header="Drug Information"
+  [modal]="true"
+  [(visible)]="drugDialogVisible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <div class="stats shadow">
+    <div class="stat">
+      <div class="stat-figure text-primary"></div>
+      <div class="stat-title">Drug Name:</div>
+      <div class="stat-value text-primary">{{ medicineInfoData.drugName }}</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-figure text-secondary"></div>
+      <div class="stat-title">Generic Name:</div>
+      <div class="stat-value text-secondary">
+        {{ medicineInfoData.generic }}
+      </div>
+      <div class="stat-desc">
+        <div class="stat-desc"></div>
+        <div class="stat-desc text-md font-bold">
+          Formulation: {{ medicineInfoData.drugFormation }}
+        </div>
+        <div class="stat-desc text-md font-bold">
+          Strength: {{ medicineInfoData.drugStrength }}
+        </div>
+        <div class="stat-desc text-md font-bold">
+          Vendor: {{ medicineInfoData.vendor }}
+        </div>
+      </div>
+      <!-- Add more relevant information from API response here -->
+    </div>
+  </div>
+</p-dialog>
+
+<!--modal for doctor information-->
+<p-dialog
+  header="Doctor Information"
+  [modal]="true"
+  [(visible)]="doctorDialogVisible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="true"
+>
+  <div class="overflow-x-auto">
+    <div class="mb-4 flex items-center">
+      <label for="divisionToggle" class="mr-4 font-semibold"
+        >Show by Division:</label
+      >
+      <input id="divisionToggle" type="checkbox" class="toggle" checked />
+    </div>
+    <p class="text-lg font-bold mb-4">Total Doctors: {{ doctorData.length }}</p>
+
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>BMDC</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <tr *ngFor="let doctor of doctorData">
+          <th></th>
+          <td>
+            <div class="flex items-center gap-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/028/251/987/original/doctor-3d-icon-illustration-free-png.png"
+                    alt="Doctor Icon"
+                  />
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{ doctor.name }}</div>
+                <div class="text-sm opacity-50">Bangladesh</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            {{ doctor.bmdc }}
+          </td>
+          <th>
+            <button class="btn btn-ghost btn-xs">details</button>
+          </th>
+        </tr>
+      </tbody>
+      <!-- foot -->
+      <tfoot>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>BMDC</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</p-dialog>

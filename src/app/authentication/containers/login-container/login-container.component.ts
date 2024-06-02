@@ -24,7 +24,7 @@ export class LoginContainerComponent implements onInit {
 
   ngOnInit(): void {
     if (this.token_save.getToken()) {
-      this.router.navigate(['/dashboard/search']);
+      this.router.navigate(['/dashboard/map']);
     }
   }
 
@@ -38,7 +38,7 @@ export class LoginContainerComponent implements onInit {
       (response) => {
         this.token_save.saveToLocal(response);
         this.toastr.success('Login Successfully');
-        this.router.navigate(['/dashboard/search']);
+        this.router.navigate(['/dashboard/map']);
       },
       (error) => {
         this.toastr.error('Invalid Credentials');

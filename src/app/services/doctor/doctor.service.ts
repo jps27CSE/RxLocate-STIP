@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MapService {
-  private mapApiUrl = `${environment.API_BASE_URL}`;
+export class DoctorService {
+  private doctorApiURL = `${environment.API_BASE_URL}/doctor`;
+
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService,
   ) {}
 
-  Get_All_Locations(): Observable<any> | null {
-    const url = `${this.mapApiUrl}/div/division-list`;
-
+  Search_by_Drug(drug: string): Observable<any> | null {
+    const url = `${this.doctorApiURL}/doctor-list-by-drug/${drug}`;
     const token = this.localStorageService.getToken();
-
     if (token) {
       const headers = new HttpHeaders({
         authorization: `Bearer ${token}`,
@@ -30,22 +29,5 @@ export class MapService {
     }
   }
 
-  Get_Location_Medicine(
-    location: string,
-    medicine: string,
-  ): Observable<any> | null {
-    const url = `${this.mapApiUrl}/map/select/${medicine}/${location}`;
-
-    const token = this.localStorageService.getToken();
-
-    if (token) {
-      const headers = new HttpHeaders({
-        authorization: `Bearer ${token}`,
-      });
-      return this.http.get(url, { headers });
-    } else {
-      console.log('Token not available');
-      return null;
-    }
-  }
+  // Search_by_divisionName();
 }

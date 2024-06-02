@@ -1,9 +1,19 @@
-<div class="flex lg:flex-row flex-col w-11/12 mx-auto">
+<app-search-field
+  [location]="selectedLocation"
+  (formSubmit)="onSubmit($event)"
+/>
+<div class="flex lg:flex-row flex-col w-11/12 mx-auto gap-5">
   <div class="lg:w-4/12 h-[70vh]">
-    <app-map-details [fullData]="fullData"></app-map-details>
+    <app-map-details
+      (locationClicked)="onLocationClick($event)"
+      [fullData]="fullData"
+    ></app-map-details>
   </div>
 
   <div class="w-full">
-    <app-map-view [fullData]="fullData"></app-map-view>
+    <app-map-view
+      [loaderState]="loader"
+      [onUpdatedData]="fullData"
+    ></app-map-view>
   </div>
 </div>
