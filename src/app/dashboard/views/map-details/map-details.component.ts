@@ -21,7 +21,7 @@ import { LocalStorageService } from '../../../services/localStorage/local-storag
 import { MedicineService } from '../../../services/medicine/medicine.service';
 import { MapService } from '../../../services/map/map.service';
 import { InputTextModule } from 'primeng/inputtext';
-import { NgForOf } from '@angular/common';
+import { NgClass, NgForOf, NgStyle } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DoctorService } from '../../../services/doctor/doctor.service';
 import { ChipModule } from 'primeng/chip';
@@ -41,6 +41,8 @@ import { DownloadService } from '../../../services/download/download.service';
     DialogModule,
     ButtonModule,
     ChipModule,
+    NgClass,
+    NgStyle,
   ],
   templateUrl: './map-details.component.html',
   styleUrls: ['./map-details.component.css'],

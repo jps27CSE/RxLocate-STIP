@@ -11,7 +11,7 @@
         <img
           src="assets/download.svg"
           alt="download button"
-          class="w-7 bg-green-700 rounded-lg cursor-pointer"
+          class="w-7 bg-[#00A96E] rounded-lg cursor-pointer"
           (click)="downloadClick()"
         />
       </div>
@@ -186,22 +186,35 @@
   [maximizable]="true"
 >
   <div class="overflow-x-auto">
+    <p class="text-lg font-bold mb-4">Search by Division :</p>
     <div class="flex flex-wrap gap-2 mb-4">
-      <p-chip
-        class="cursor-pointer"
+      <div
+        class="cursor-pointer px-4 py-2 rounded-full"
         *ngFor="let division of divisions"
-        label="{{ division }}"
         (click)="filterByDivision(division)"
-        [class.selected]="selectedDivision === division"
-      ></p-chip>
-      <p-chip
-        class="cursor-pointer"
-        label="All"
+        [ngClass]="{
+          'bg-[#00A96E] text-white': selectedDivision === division,
+          'bg-gray-200 text-black': selectedDivision !== division
+        }"
+      >
+        {{ division }}
+      </div>
+      <div
+        class="cursor-pointer px-4 py-2 rounded-full"
         (click)="filterByDivision('All')"
-        [class.selected]="selectedDivision === 'All'"
-      ></p-chip>
+        [ngClass]="{
+          'bg-[#00A96E] text-white': selectedDivision === 'All',
+          'bg-gray-200 text-black': selectedDivision !== 'All'
+        }"
+      >
+        All
+      </div>
     </div>
-    <p class="text-lg font-bold mb-4">Total Doctors: {{ doctorData.length }}</p>
+    <p class="text-lg font-bold mb-4">
+      <span role="alert" class="alert">
+        <span>Total Doctors: {{ filteredDoctorData.length }}</span>
+      </span>
+    </p>
 
     <table class="table">
       <!-- head -->
