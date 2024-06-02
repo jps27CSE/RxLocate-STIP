@@ -96,7 +96,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   filterLocationSuggestions(event: { query: string }) {
-    // Filter suggestions from the fetched locations array
     this.filteredLocationSuggestions = this.locations.filter((location) =>
       location.toLowerCase().includes(event.query.toLowerCase()),
     );
@@ -122,7 +121,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   filterDrugSuggestions(event: { query: string }) {
-    // Filter suggestions from the fetched locations array
     this.filteredDrugSuggestions = this.drugs.filter((location) =>
       location.toLowerCase().includes(event.query.toLowerCase()),
     );
