@@ -168,7 +168,6 @@ export class MapDetailsComponent implements OnInit, OnChanges {
   }
 
   //Download by Drug
-
   downloadClick() {
     if (
       this.fullData &&
@@ -226,5 +225,12 @@ export class MapDetailsComponent implements OnInit, OnChanges {
     } else {
       console.log('No drug name available for download');
     }
+  }
+
+  isDialogMaximized: boolean = false;
+
+  // Function to handle maximize event
+  handleMaximizeEvent(event: any) {
+    this.isDialogMaximized = event.maximized;
   }
 }

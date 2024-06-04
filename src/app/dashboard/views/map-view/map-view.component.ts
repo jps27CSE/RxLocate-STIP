@@ -99,7 +99,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
       }).bindPopup(
         `<div class="card-body h-32">
     <h2 class="text-2xl font-bold mx-auto">${location.districtName ? location.districtName : location.divisionName}</h2>
-    <p class="text-sm mx-auto">Prescribe Count: <span class="font-bold">${location.prescriptionCount}</span></p>
+    <p class="text-sm mx-auto">Prescription Count: <span class="font-bold">${location.prescriptionCount}</span></p>
   </div>`,
       );
 

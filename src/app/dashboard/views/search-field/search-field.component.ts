@@ -7,7 +7,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { InputTextModule } from 'primeng/inputtext';
 import {
   FormBuilder,
   FormGroup,
@@ -23,17 +22,18 @@ import { LocalStorageService } from '../../../services/localStorage/local-storag
 import { MedicineService } from '../../../services/medicine/medicine.service';
 import { ToastrService } from 'ngx-toastr';
 import { DropdownModule } from 'primeng/dropdown';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-search-field',
   standalone: true,
   imports: [
-    InputTextModule,
+    FormsModule,
     ReactiveFormsModule,
     FloatLabelModule,
     AutoCompleteModule,
     DropdownModule,
-    FormsModule,
+    NgIf,
   ],
   templateUrl: './search-field.component.html',
   styleUrls: ['./search-field.component.css'],
@@ -45,15 +45,15 @@ export class SearchFieldComponent implements OnInit, OnChanges {
     data?: any;
   }> = new EventEmitter();
   searchForm: FormGroup;
-
   selectedItem: string | undefined;
   filteredLocationSuggestions: string[] = [];
   locations: string[] = [];
-
   selectedDrugItem: string | undefined;
   filteredDrugSuggestions: string[] = [];
   drugs: string[] = [];
   @Input() location!: string;
+
+  showClearButton = false;
 
   constructor(
     private fb: FormBuilder,
@@ -73,6 +73,11 @@ export class SearchFieldComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.fetchLocations();
     this.fetchDrugs();
+
+    // Listen to changes in the location input field to show/hide the clear button
+    this.searchForm.get('location')?.valueChanges.subscribe((value) => {
+      this.showClearButton = !!value;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -88,10 +93,7 @@ export class SearchFieldComponent implements OnInit, OnChanges {
     if (medicineValue && !locationValue) {
       this.formSubmit.emit({ location: '', medicine: medicineValue });
     } else if (locationValue && medicineValue) {
-      const formData = {
-        location: locationValue,
-        medicine: medicineValue,
-      };
+      const formData = { location: locationValue, medicine: medicineValue };
       this.formSubmit.emit(formData);
     } else {
       this.toastr.error('Please fill in Drug field before submitting.');
@@ -143,5 +145,14 @@ export class SearchFieldComponent implements OnInit, OnChanges {
     this.filteredDrugSuggestions = this.drugs.filter((drug) =>
       drug.toLowerCase().includes(event.query.toLowerCase()),
     );
+  }
+
+  onInput(event: Event): void {
+    // Handle input event logic if needed
+  }
+
+  clearInput(): void {
+    this.searchForm.get('location')?.setValue('');
+    this.onSubmit();
   }
 }
