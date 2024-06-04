@@ -168,7 +168,6 @@ export class MapDetailsComponent implements OnInit, OnChanges {
   }
 
   //Download by Drug
-
   downloadClick() {
     if (
       this.fullData &&
