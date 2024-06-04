@@ -226,4 +226,11 @@ export class MapDetailsComponent implements OnInit, OnChanges {
       console.log('No drug name available for download');
     }
   }
+
+  isDialogMaximized: boolean = false;
+
+  // Function to handle maximize event
+  handleMaximizeEvent(event: any) {
+    this.isDialogMaximized = event.maximized;
+  }
 }

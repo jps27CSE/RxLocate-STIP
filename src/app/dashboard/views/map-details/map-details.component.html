@@ -180,9 +180,10 @@
   header="Doctor Information"
   [modal]="true"
   [(visible)]="doctorDialogVisible"
-  [style]="{ width: '50rem' }"
+  [style]="{ width: '50rem', height: '40rem' }"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
   [maximizable]="true"
+  (onMaximize)="handleMaximizeEvent($event)"
 >
   <div class="overflow-x-auto">
     <p class="text-lg font-bold mb-4">Search by Division :</p>
@@ -214,53 +215,57 @@
         <span>Total Doctors: {{ filteredDoctorData.length }}</span>
       </span>
     </p>
-
-    <table class="table">
-      <!-- head -->
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>BMDC</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- row 1 -->
-        <tr *ngFor="let doctor of filteredDoctorData">
-          <th></th>
-          <td>
-            <div class="flex items-center gap-3">
-              <div class="avatar">
-                <div class="mask mask-squircle w-12 h-12">
-                  <img
-                    src="https://static.vecteezy.com/system/resources/previews/028/251/987/original/doctor-3d-icon-illustration-free-png.png"
-                    alt="Doctor Icon"
-                  />
+    <div
+      [style.max-height]="isDialogMaximized ? 'none' : '300px'"
+      [style.overflow-y]="isDialogMaximized ? 'visible' : 'auto'"
+    >
+      <table class="table">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>BMDC</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr *ngFor="let doctor of filteredDoctorData">
+            <th></th>
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="avatar">
+                  <div class="mask mask-squircle w-12 h-12">
+                    <img
+                      src="https://static.vecteezy.com/system/resources/previews/028/251/987/original/doctor-3d-icon-illustration-free-png.png"
+                      alt="Doctor Icon"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div class="font-bold">{{ doctor.doctorName }}</div>
+                  <div class="text-sm text-blue-500">
+                    {{ doctor.divisionName }}
+                  </div>
                 </div>
               </div>
-              <div>
-                <div class="font-bold">{{ doctor.doctorName }}</div>
-                <div class="text-sm text-blue-500">
-                  {{ doctor.divisionName }}
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            {{ doctor.doctorBMDC }}
-          </td>
-          <th></th>
-        </tr>
-      </tbody>
-      <!-- foot -->
-      <tfoot>
-        <tr>
-          <th></th>
+            </td>
+            <td>
+              {{ doctor.doctorBMDC }}
+            </td>
+            <th></th>
+          </tr>
+        </tbody>
+        <!-- foot -->
+        <tfoot>
+          <tr>
+            <th></th>
 
-          <th></th>
-        </tr>
-      </tfoot>
-    </table>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </p-dialog>
