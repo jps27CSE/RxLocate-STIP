@@ -1,5 +1,5 @@
 @if (fullData) {
-  <div class="bg-[#f2f6fc] h-[70vh] lg:p-4 p-4">
+  <div class="bg-[#f2f6fc] h-[70vh] p-10">
     <div></div>
     <!-- location -->
     <div class="mb-5" data-aos="zoom-in">
@@ -15,32 +15,36 @@
       <!-- showing results -->
       @if (fullData) {
         <div>
-          <div class="flex items-center mt-2">
-            <p class="font-bold mr-2">
-              @if (fullData[0].districtId) {
-                {{ fullData[0].divisionName }},
-              }
-            </p>
+          <div class="items-center mt-2">
             <span class="flex items-center">
+              <h1>
+                Drug:
+                <span class="font-bold mr-2">{{ fullData[0].drugName }} </span>
+              </h1>
               <p-button
                 (click)="showDrugDialog()"
-                [label]="fullData[0].drugName"
                 [style]="{
-                  padding: '5px',
-                  height: '25px',
-                  backgroundColor: '#f55a21',
+                  backgroundColor: '#00A96E',
                   color: 'white',
                   display: 'flex',
                   alignItems: 'center'
                 }"
               >
                 <img
-                  src="assets/medicine.svg"
+                  src="assets/info.png"
                   alt="Medicine Icon"
-                  style="width: 20px; height: 20px; margin-right: 5px"
+                  style="width: 25px; height: 25px"
                 />
               </p-button>
             </span>
+            <p class="mr-2 mt-5">
+              @if (fullData[0].districtId) {
+                <h1>
+                  Location:
+                  <span class="font-bold">{{ fullData[0].divisionName }}</span>
+                </h1>
+              }
+            </p>
           </div>
         </div>
       }
@@ -111,19 +115,6 @@
 @if (!fullData) {
   <div class="bg-[#f2f6fc] rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg">
     <div role="alert" class="alert alert-success">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="stroke-current shrink-0 h-6 w-6 text-white"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
       <span class="text-white">
         Please search for a drug to see the results.</span
       >
