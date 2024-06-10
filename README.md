@@ -4,14 +4,16 @@ RxLocate is a location-based prescription analysis tool developed. It provides e
 
 ## Features
 
-### Effortless Location Search
-Quickly find marking points on the map that show which locations have prescribed which medicines and how many times.
+- **Effortless Location Search:**
+  - Quickly find marking points on the map that show which locations have prescribed which medicines and how many times.
 
-### Comprehensive Drug and Division Insights
-Utilize the drug search feature to see a list of divisions, detailing how many times each doctor has prescribed a specific drug. With the drug and division search, view district data on a map, showing which doctors prescribed which medications based on division.
+- **Comprehensive Drug and Division Insights:**
+  - Utilize the drug search feature to see a list of divisions, detailing how many times each doctor has prescribed a specific drug.
+  - View district data on a map, showing which doctors prescribed which medications based on division.
 
-### Detailed Medicine Data and Downloads
-Access comprehensive data on each medicine, including details of prescriptions by doctors. Download this data as an Excel file for streamlined analysis and reporting.
+- **Detailed Medicine Data and Downloads:**
+  - Access comprehensive data on each medicine, including details of prescriptions by doctors.
+  - Download this data as an Excel file for streamlined analysis and reporting.
 
 ## Technologies Used
 
