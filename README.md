@@ -1,6 +1,6 @@
 # RxLocate
 
-RxLocate is a location-based prescription analysis tool developed by SQUARE Health Ltd. It provides effortless location search, comprehensive drug and division insights, and detailed medicine data and downloads.
+RxLocate is a location-based prescription analysis tool developed. It provides effortless location search, comprehensive drug and division insights, and detailed medicine data and downloads.
 
 ## Features
 
