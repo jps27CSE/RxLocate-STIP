@@ -2,24 +2,22 @@
   class="bg-[#f2f6fc] mx-auto rounded-lg lg:h-32 md:h-52 h-52 flex justify-center items-center lg:mt-0 mt-16"
 >
   <div
-    class="lg:bg-white lg:w-[40%] md:w-12/12 h-auto sm:h-20 lg:rounded-full flex flex-col sm:flex-row justify-center items-center p-4 sm:p-2"
+    class="lg:bg-white lg:w-[50%] md:w-12/12 h-auto sm:h-20 lg:rounded-full flex flex-col sm:flex-row justify-center items-center p-4 sm:p-2"
   >
     <form
       [formGroup]="searchForm"
       (ngSubmit)="onSubmit()"
-      class="flex flex-col sm:flex-row flex-wrap justify-center items-center w-full"
+      class="flex flex-col sm:flex-row justify-center items-center w-full"
     >
       <p-autoComplete
         class="autoComplete-field w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
         formControlName="medicine"
         placeholder="Search by Drug"
-        [inputStyle]="{
-          borderBottom: '1px ',
-          padding: '5px'
-        }"
+        [inputStyle]="{ borderBottom: '1px ', padding: '5px' }"
         [suggestions]="filteredDrugSuggestions"
         (completeMethod)="filterDrugSuggestions($event)"
       ></p-autoComplete>
+
       <div
         class="relative w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
       >
@@ -34,8 +32,8 @@
           }"
           [suggestions]="filteredLocationSuggestions"
           (completeMethod)="filterLocationSuggestions($event)"
-          (input)="onInput($event)"
         ></p-autoComplete>
+
         <button
           *ngIf="showClearButton"
           class="absolute top-1/2 transform -translate-y-1/2 right-2 bg-gray-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
@@ -45,8 +43,33 @@
         </button>
       </div>
 
+      <div
+        class="relative w-full sm:w-auto mb-2 sm:mb-0 sm:mr-4 border-b border-gray-400 border-solid"
+      >
+        <p-autoComplete
+          class="autoComplete-field w-full"
+          formControlName="district"
+          placeholder="Search by District"
+          [inputStyle]="{
+            borderBottom: '1px ',
+            padding: '5px',
+            margin: '0px 0px 0px 0px'
+          }"
+          [suggestions]="filteredDistrictSuggestions"
+          (completeMethod)="filterDistrictSuggestions($event)"
+        ></p-autoComplete>
+
+        <button
+          *ngIf="searchForm.get('district')?.value"
+          class="absolute top-1/2 transform -translate-y-1/2 right-2 bg-gray-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+          (click)="clearDistrictInput()"
+        >
+          &#10005;
+        </button>
+      </div>
+
       <button
-        class="m-2 h-9 w-full sm:w-20 rounded-full btn-active btn-neutral lg:mb-0 md:mb-0 mb-16"
+        class="m-2 h-9 lg:w-full w-20 rounded-full btn-active btn-neutral lg:mb-0 md:mb-0 mb-16"
       >
         Search
       </button>

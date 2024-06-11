@@ -1,4 +1,4 @@
-import { Component, Input, input, OnInit } from '@angular/core';
+import { Component, Input, input, OnInit, ViewChild } from '@angular/core';
 import { MapDetailsComponent } from '../../views/map-details/map-details.component';
 import { MapViewComponent } from '../../views/map-view/map-view.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,11 +15,13 @@ import { MedicineService } from '../../../services/medicine/medicine.service';
   styleUrl: './map-details-container.component.css',
 })
 export class MapDetailsContainerComponent implements OnInit {
+  @ViewChild(SearchFieldComponent) searchFieldComponent!: SearchFieldComponent;
   location!: string;
   medicine!: string;
   fullData!: any;
   loader!: boolean;
   selectedLocation: string = '';
+  selectedDivision: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -67,15 +69,59 @@ export class MapDetailsContainerComponent implements OnInit {
     );
   }
 
-  onSubmit(event: { location: string; medicine: string }) {
+  getLocationMedicineDivisionDistrict(
+    drug: string,
+    division: string,
+    district: string,
+  ): void {
+    console.log('from new function', drug, division, district);
+    this.loader = true;
+    // @ts-ignore
+    this.mapService
+      .Get_Location_by_Medicine_Division_District(drug, division, district)
+      .subscribe(
+        (data) => {
+          this.fullData = data;
+          this.loader = false;
+          console.log('Location Medicine Division District Data:', data);
+        },
+        (error) => {
+          this.loader = false;
+          this.local.removeFromLocal();
+          this.router.navigate(['/login']);
+          console.error(
+            'Error fetching location medicine division district data:',
+            error,
+          );
+        },
+      );
+  }
+
+  onSubmit(event: {
+    location: string;
+    medicine: string;
+    district?: string;
+    data?: any;
+  }) {
     if (event.medicine && event.location === '') {
       this.getMedicine(event.medicine);
-    } else if (event.medicine && event.location) {
+    } else if (event.medicine && event.location && event.district === '') {
       this.getLocationMedicine(event.location, event.medicine);
+    } else if (event.medicine && event.location && event.district) {
+      this.getLocationMedicineDivisionDistrict(
+        event.medicine,
+        event.location,
+        event.district,
+      );
     }
   }
 
   onLocationClick(location: string): void {
     this.selectedLocation = location;
+  }
+  onDistrictClick(district: string): void {
+    // Update the district value in the search field component
+    console.log(district);
+    this.searchFieldComponent.setDistrictValue(district);
   }
 }

@@ -6,6 +6,7 @@
   <div class="lg:w-5/12 h-[70vh]">
     <app-map-details
       (locationClicked)="onLocationClick($event)"
+      (districtClicked)="onDistrictClick($event)"
       [fullData]="fullData"
     ></app-map-details>
   </div>
