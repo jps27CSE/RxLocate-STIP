@@ -44,6 +44,12 @@
                   <span class="font-bold">{{ fullData[0].divisionName }}</span>
                 </h1>
               }
+              @if (fullData[0].areaId) {
+                <h1>
+                  Location:
+                  <span class="font-bold">{{ fullData[0].areaName }}</span>
+                </h1>
+              }
             </p>
           </div>
         </div>
@@ -96,11 +102,7 @@
               <p>
                 {{ data.districtName }}
               </p>
-              @if (data.areaId) {
-                <p>
-                  {{ data.areaName }}
-                </p>
-              }
+
               <p>
                 <span class="font-bold">{{ data.prescriptionCount }}</span>
                 Counts
