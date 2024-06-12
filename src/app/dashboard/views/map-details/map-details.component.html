@@ -75,54 +75,53 @@
           Most Prescribed
         </p>
         <!-- list of data -->
-        <div
-          class="p-2 overflow-y-auto max-h-[30vh]"
-          *ngFor="let data of fullData"
-        >
-          @if (data.divisionId) {
-            <div
-              class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
-              (click)="onLocationClick(data.divisionName)"
-            >
-              <p>
-                {{ data.divisionName }}
-              </p>
+        <div class="overflow-y-auto max-h-[30vh] p-2">
+          <div *ngFor="let data of fullData">
+            @if (data.divisionId) {
+              <div
+                class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+                (click)="onLocationClick(data.divisionName)"
+              >
+                <p>
+                  {{ data.divisionName }}
+                </p>
 
-              <p>
-                <span class="font-bold">{{ data.prescriptionCount }}</span>
-                Counts
-              </p>
-            </div>
-          }
-          @if (data.districtId) {
-            <div
-              class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
-              (click)="onDistrictClick(data.districtName)"
-            >
-              <p>
-                {{ data.districtName }}
-              </p>
+                <p>
+                  <span class="font-bold">{{ data.prescriptionCount }}</span>
+                  Counts
+                </p>
+              </div>
+            }
+            @if (data.districtId) {
+              <div
+                class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+                (click)="onDistrictClick(data.districtName)"
+              >
+                <p>
+                  {{ data.districtName }}
+                </p>
 
-              <p>
-                <span class="font-bold">{{ data.prescriptionCount }}</span>
-                Counts
-              </p>
-            </div>
-          }
-          @if (data.areaId) {
-            <div
-              class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
-            >
-              <p>
-                {{ data.areaName }}
-              </p>
+                <p>
+                  <span class="font-bold">{{ data.prescriptionCount }}</span>
+                  Counts
+                </p>
+              </div>
+            }
+            @if (data.areaId) {
+              <div
+                class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+              >
+                <p>
+                  {{ data.areaName }}
+                </p>
 
-              <p>
-                <span class="font-bold">{{ data.prescriptionCount }}</span>
-                Counts
-              </p>
-            </div>
-          }
+                <p>
+                  <span class="font-bold">{{ data.prescriptionCount }}</span>
+                  Counts
+                </p>
+              </div>
+            }
+          </div>
         </div>
       </div>
     } @else if (fullData.length < 1) {
