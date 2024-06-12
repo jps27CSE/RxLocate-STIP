@@ -92,6 +92,10 @@ export class SearchFieldComponent implements OnInit, OnChanges {
     this.searchForm.get('district')?.setValue(district);
   }
 
+  setDivisonValue(division: string): void {
+    this.searchForm.get('location')?.setValue(division);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['location'] && !changes['location'].firstChange) {
       this.searchForm.get('location')?.setValue(this.location || '');

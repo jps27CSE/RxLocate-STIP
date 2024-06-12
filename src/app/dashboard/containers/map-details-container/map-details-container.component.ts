@@ -16,8 +16,9 @@ import { MedicineService } from '../../../services/medicine/medicine.service';
 })
 export class MapDetailsContainerComponent implements OnInit {
   @ViewChild(SearchFieldComponent) searchFieldComponent!: SearchFieldComponent;
-  location!: string;
+  division!: string;
   medicine!: string;
+  district: string = '';
   fullData!: any;
   loader!: boolean;
   selectedLocation: string = '';
@@ -50,8 +51,9 @@ export class MapDetailsContainerComponent implements OnInit {
     );
   }
 
-  getLocationMedicine(location: string, drug: string): void {
+  getDivisionMedicine(location: string, drug: string): void {
     this.loader = true;
+    console.log(location);
     // @ts-ignore
     this.mapService.Get_Location_Medicine(location, drug).subscribe(
       (data) => {
@@ -103,11 +105,18 @@ export class MapDetailsContainerComponent implements OnInit {
     district?: string;
     data?: any;
   }) {
+    console.log(event);
     if (event.medicine && event.location === '') {
+      this.medicine = event.medicine;
       this.getMedicine(event.medicine);
     } else if (event.medicine && event.location && event.district === '') {
-      this.getLocationMedicine(event.location, event.medicine);
+      this.medicine = event.medicine;
+      this.division = event.location;
+      this.getDivisionMedicine(event.location, event.medicine);
     } else if (event.medicine && event.location && event.district) {
+      this.medicine = event.medicine;
+      this.division = event.location;
+      this.district = event.district;
       this.getLocationMedicineDivisionDistrict(
         event.medicine,
         event.location,
@@ -117,11 +126,24 @@ export class MapDetailsContainerComponent implements OnInit {
   }
 
   onLocationClick(location: string): void {
-    this.selectedLocation = location;
+    console.log(location);
+    this.division = location;
+    this.searchFieldComponent.setDivisonValue(this.division);
+    this.onSubmit({
+      location: this.division,
+      medicine: this.medicine,
+      district: this.district,
+    });
   }
   onDistrictClick(district: string): void {
     // Update the district value in the search field component
     console.log(district);
+    this.district = district;
     this.searchFieldComponent.setDistrictValue(district);
+    this.onSubmit({
+      location: this.division,
+      medicine: this.medicine,
+      district: this.district,
+    });
   }
 }
