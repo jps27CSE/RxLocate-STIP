@@ -75,9 +75,6 @@ export class SearchFieldComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.fetchLocations();
-    this.fetchDrugs();
-
-    // Listen to changes in the location input field to show/hide the clear button and enable/disable district field
     this.searchForm.get('location')?.valueChanges.subscribe((value) => {
       this.showClearButton = !!value;
       if (value) {
@@ -156,7 +153,7 @@ export class SearchFieldComponent implements OnInit, OnChanges {
     // @ts-ignore
     this.getDrugs.Get_All_Drugs().subscribe(
       (response: any) => {
-        this.drugs = response.map((drug: any) => drug.name);
+        this.drugs = response.map((drug: any) => drug.drugName);
       },
       (error) => {
         console.error('Error fetching drugs:', error);
@@ -200,10 +197,8 @@ export class SearchFieldComponent implements OnInit, OnChanges {
     return locationMedicine ? locationMedicine : of(null);
   }
 
-  filterDrugSuggestions(event: { query: string }) {
-    this.filteredDrugSuggestions = this.drugs.filter((drug) =>
-      drug.toLowerCase().includes(event.query.toLowerCase()),
-    );
+  onSelect(data: any) {
+    console.log(data);
   }
 
   clearInput(): void {
@@ -214,5 +209,17 @@ export class SearchFieldComponent implements OnInit, OnChanges {
   clearDistrictInput(): void {
     this.searchForm.get('district')?.setValue('');
     this.onSubmit();
+  }
+
+  onSearch($event: any) {
+    console.log($event);
+    const name = $event.query;
+    // @ts-ignore
+    this.getDrugs
+      .Get_All_Drugs_by_Charecter(name)
+      .subscribe((response: any) => {
+        this.filteredDrugSuggestions = response.map((drug: any) => drug.name);
+        console.log(this.filteredDrugSuggestions);
+      });
   }
 }

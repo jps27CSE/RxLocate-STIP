@@ -15,7 +15,7 @@
         placeholder="Search by Drug"
         [inputStyle]="{ borderBottom: '1px ', padding: '5px' }"
         [suggestions]="filteredDrugSuggestions"
-        (completeMethod)="filterDrugSuggestions($event)"
+        (completeMethod)="onSearch($event)"
       ></p-autoComplete>
 
       <div

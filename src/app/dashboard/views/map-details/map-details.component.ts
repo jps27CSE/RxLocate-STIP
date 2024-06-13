@@ -24,6 +24,7 @@ import { ButtonModule } from 'primeng/button';
 import { DoctorService } from '../../../services/doctor/doctor.service';
 import { ChipModule } from 'primeng/chip';
 import { DownloadService } from '../../../services/download/download.service';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @Component({
   selector: 'app-map-details',
@@ -41,6 +42,7 @@ import { DownloadService } from '../../../services/download/download.service';
     ChipModule,
     NgClass,
     NgStyle,
+    BreadcrumbModule,
   ],
   templateUrl: './map-details.component.html',
   styleUrls: ['./map-details.component.css'],

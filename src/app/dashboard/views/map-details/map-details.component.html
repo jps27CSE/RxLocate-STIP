@@ -19,23 +19,24 @@
             <span class="flex items-center">
               <h1>
                 Drug:
-                <span class="font-bold mr-2">{{ fullData[0].drugName }} </span>
+                <span class="font-bold">{{ medicineInfoData.drugName }}</span>
+                <div>
+                  Generic Name:
+                  <span class="font-bold">{{ medicineInfoData.generic }}</span>
+                </div>
+                <div>
+                  Formulation:
+                  <span class="font-bold">{{
+                    medicineInfoData.drugFormation
+                  }}</span>
+                </div>
+                <div>
+                  Strength:
+                  <span class="font-bold">{{
+                    medicineInfoData.drugStrength
+                  }}</span>
+                </div>
               </h1>
-              <p-button
-                (click)="showDrugDialog()"
-                [style]="{
-                  backgroundColor: '#00A96E',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center'
-                }"
-              >
-                <img
-                  src="assets/info.png"
-                  alt="Medicine Icon"
-                  style="width: 25px; height: 25px"
-                />
-              </p-button>
             </span>
             <p class="mr-2 mt-5">
               @if (fullData[0].districtId) {
@@ -71,6 +72,160 @@
         class="bg-white h-[calc(70vh - 200px)] w-12/12 mx-auto rounded-lg"
         data-aos="zoom-in"
       >
+        <nav class="flex p-2" aria-label="Breadcrumb">
+          <ol
+            class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
+          >
+            @if (
+              fullData[0].divisionName &&
+              fullData[0].districtName == undefined &&
+              fullData[0].areaName == undefined
+            ) {
+              <li class="inline-flex items-center">
+                <a
+                  href="#"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-[#00A96E]"
+                >
+                  <svg
+                    class="w-3 h-3 me-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                  </svg>
+                  Division
+                </a>
+              </li>
+            }
+            @if (
+              fullData[0].divisionName &&
+              fullData[0].districtName &&
+              fullData[0].areaName == undefined
+            ) {
+              <li class="inline-flex items-center">
+                <a
+                  href="#"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  <svg
+                    class="w-3 h-3 me-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                  </svg>
+                  Division
+                </a>
+              </li>
+              <li>
+                <div class="flex items-center">
+                  <svg
+                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                  <a
+                    href="#"
+                    class="ms-1 text-sm font-medium text-gray-700 md:ms-2 dark:text-[#00A96E]"
+                    >District</a
+                  >
+                </div>
+              </li>
+            }
+            @if (
+              fullData[0].divisionName &&
+              fullData[0].districtName &&
+              fullData[0].areaName
+            ) {
+              <li class="inline-flex items-center">
+                <a
+                  href="#"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  <svg
+                    class="w-3 h-3 me-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                  </svg>
+                  Division
+                </a>
+              </li>
+              <li>
+                <div class="flex items-center">
+                  <svg
+                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                  <a
+                    href="#"
+                    class="ms-1 text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400"
+                    >District</a
+                  >
+                </div>
+              </li>
+              <li aria-current="page">
+                <div class="flex items-center">
+                  <svg
+                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                  <span
+                    class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-[#00A96E]"
+                    >Area</span
+                  >
+                </div>
+              </li>
+            }
+          </ol>
+        </nav>
+
+        <div class="card flex justify-content-center"></div>
         <p class="p-2 text-sm border-solid border-2 border-gray-200">
           Most Prescribed
         </p>
