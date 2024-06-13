@@ -17,15 +17,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
 import { MedicineService } from '../../../services/medicine/medicine.service';
-import { MapService } from '../../../services/map/map.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgClass, NgForOf, NgStyle } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DoctorService } from '../../../services/doctor/doctor.service';
 import { ChipModule } from 'primeng/chip';
 import { DownloadService } from '../../../services/download/download.service';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @Component({
   selector: 'app-map-details',
@@ -43,6 +42,7 @@ import { DownloadService } from '../../../services/download/download.service';
     ChipModule,
     NgClass,
     NgStyle,
+    BreadcrumbModule,
   ],
   templateUrl: './map-details.component.html',
   styleUrls: ['./map-details.component.css'],
@@ -54,6 +54,8 @@ export class MapDetailsComponent implements OnInit, OnChanges {
   medicineInfoData: any = {};
 
   @Output() locationClicked: EventEmitter<string> = new EventEmitter<string>();
+  @Output() districtClicked: EventEmitter<string> = new EventEmitter<string>();
+
   searchForm: any;
   totalPrescriptionCount: number = 0;
 
@@ -71,12 +73,9 @@ export class MapDetailsComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private local: LocalStorageService,
     private medicineService: MedicineService,
     private downloadService: DownloadService,
-    private getLocation: MapService,
     private getDoctorInfo: DoctorService,
-    private router: Router,
   ) {
     this.searchForm = this.fb.group({
       location: ['', [Validators.required]],
@@ -85,6 +84,7 @@ export class MapDetailsComponent implements OnInit, OnChanges {
   }
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('this data', this.fullData);
     if (changes['fullData'] && this.fullData) {
       this.calculateTotalPrescriptionCount();
 
@@ -98,10 +98,12 @@ export class MapDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  drugs: string[] = [];
-
   onLocationClick(location: string): void {
     this.locationClicked.emit(location);
+  }
+
+  onDistrictClick(district: string): void {
+    this.districtClicked.emit(district);
   }
 
   calculateTotalPrescriptionCount(): void {

@@ -30,8 +30,11 @@ import { MedicineService } from '../../../services/medicine/medicine.service';
   styleUrl: './search-form.component.css',
 })
 export class SearchFormComponent implements OnInit {
-  @Output() formSubmit: EventEmitter<{ location: string; medicine: string }> =
-    new EventEmitter();
+  @Output() formSubmit: EventEmitter<{
+    location: string;
+    medicine: string;
+    district: string;
+  }> = new EventEmitter();
   searchForm: FormGroup;
 
   constructor(
@@ -45,6 +48,7 @@ export class SearchFormComponent implements OnInit {
     this.searchForm = this.fb.group({
       location: ['', [Validators.required]],
       medicine: ['', [Validators.required]],
+      district: ['', [Validators.required]],
     });
   }
 

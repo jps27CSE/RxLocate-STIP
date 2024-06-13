@@ -97,8 +97,11 @@ export class MapViewComponent implements OnInit, AfterViewInit {
       const marker = L.marker([location.lat, location.lng], {
         icon: markerIcon,
       }).bindPopup(
-        `<div class="card-body h-32">
-    <h2 class="text-2xl font-bold mx-auto">${location.districtName ? location.districtName : location.divisionName}</h2>
+        `<div class="h-14">
+<h2 class="text-xl font-bold mx-auto">
+  ${location.districtName ? location.districtName : location.divisionName ? location.divisionName : location.areaName ? location.areaName : 'Unknown'}
+</h2>
+
     <p class="text-sm mx-auto">Prescription Count: <span class="font-bold">${location.prescriptionCount}</span></p>
   </div>`,
       );

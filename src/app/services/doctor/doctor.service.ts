@@ -16,7 +16,7 @@ export class DoctorService {
   ) {}
 
   Search_by_Drug(drug: string): Observable<any> | null {
-    const url = `${this.doctorApiURL}/doctor-division-list-by-drug/${drug}`;
+    const url = `${this.doctorApiURL}/by-drug/${drug}`;
     const token = this.localStorageService.getToken();
     if (token) {
       const headers = new HttpHeaders({

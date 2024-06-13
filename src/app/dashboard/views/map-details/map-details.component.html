@@ -1,7 +1,5 @@
 @if (fullData) {
-  <div
-    class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
-  >
+  <div class="bg-[#f2f6fc] h-[70vh] p-10">
     <div></div>
     <!-- location -->
     <div class="mb-5" data-aos="zoom-in">
@@ -17,32 +15,43 @@
       <!-- showing results -->
       @if (fullData) {
         <div>
-          <div class="flex items-center mt-2">
-            <p class="font-bold mr-2">
+          <div class="items-center mt-2">
+            <span class="flex items-center">
+              <h1>
+                Drug:
+                <span class="font-bold">{{ medicineInfoData.drugName }}</span>
+                <div>
+                  Generic Name:
+                  <span class="font-bold">{{ medicineInfoData.generic }}</span>
+                </div>
+                <div>
+                  Formulation:
+                  <span class="font-bold">{{
+                    medicineInfoData.drugFormation
+                  }}</span>
+                </div>
+                <div>
+                  Strength:
+                  <span class="font-bold">{{
+                    medicineInfoData.drugStrength
+                  }}</span>
+                </div>
+              </h1>
+            </span>
+            <p class="mr-2 mt-5">
               @if (fullData[0].districtId) {
-                {{ fullData[0].divisionName }},
+                <h1>
+                  Location:
+                  <span class="font-bold">{{ fullData[0].divisionName }}</span>
+                </h1>
+              }
+              @if (fullData[0].areaId) {
+                <h1>
+                  Location:
+                  <span class="font-bold">{{ fullData[0].areaName }}</span>
+                </h1>
               }
             </p>
-            <span class="flex items-center">
-              <p-button
-                (click)="showDrugDialog()"
-                [label]="fullData[0].drugName"
-                [style]="{
-                  padding: '5px',
-                  height: '25px',
-                  backgroundColor: '#f55a21',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center'
-                }"
-              >
-                <img
-                  src="assets/medicine.svg"
-                  alt="Medicine Icon"
-                  style="width: 20px; height: 20px; margin-right: 5px"
-                />
-              </p-button>
-            </span>
           </div>
         </div>
       }
@@ -63,25 +72,210 @@
         class="bg-white h-[calc(70vh - 200px)] w-12/12 mx-auto rounded-lg"
         data-aos="zoom-in"
       >
+        <nav class="flex p-2" aria-label="Breadcrumb">
+          <ol
+            class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
+          >
+            @if (
+              fullData[0].divisionName &&
+              fullData[0].districtName == undefined &&
+              fullData[0].areaName == undefined
+            ) {
+              <li class="inline-flex items-center">
+                <a
+                  href="#"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-[#00A96E]"
+                >
+                  <svg
+                    class="w-3 h-3 me-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                  </svg>
+                  Division
+                </a>
+              </li>
+            }
+            @if (
+              fullData[0].divisionName &&
+              fullData[0].districtName &&
+              fullData[0].areaName == undefined
+            ) {
+              <li class="inline-flex items-center">
+                <a
+                  href="#"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  <svg
+                    class="w-3 h-3 me-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                  </svg>
+                  Division
+                </a>
+              </li>
+              <li>
+                <div class="flex items-center">
+                  <svg
+                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                  <a
+                    href="#"
+                    class="ms-1 text-sm font-medium text-gray-700 md:ms-2 dark:text-[#00A96E]"
+                    >District</a
+                  >
+                </div>
+              </li>
+            }
+            @if (
+              fullData[0].divisionName &&
+              fullData[0].districtName &&
+              fullData[0].areaName
+            ) {
+              <li class="inline-flex items-center">
+                <a
+                  href="#"
+                  class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400"
+                >
+                  <svg
+                    class="w-3 h-3 me-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                  </svg>
+                  Division
+                </a>
+              </li>
+              <li>
+                <div class="flex items-center">
+                  <svg
+                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                  <a
+                    href="#"
+                    class="ms-1 text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400"
+                    >District</a
+                  >
+                </div>
+              </li>
+              <li aria-current="page">
+                <div class="flex items-center">
+                  <svg
+                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                  <span
+                    class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-[#00A96E]"
+                    >Area</span
+                  >
+                </div>
+              </li>
+            }
+          </ol>
+        </nav>
+
+        <div class="card flex justify-content-center"></div>
         <p class="p-2 text-sm border-solid border-2 border-gray-200">
           Most Prescribed
         </p>
         <!-- list of data -->
-        <div class="p-2 overflow-y-auto max-h-[30vh]">
-          <div
-            class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
-            *ngFor="let data of fullData"
-            (click)="onLocationClick(data.divisionName)"
-          >
+        <div class="overflow-y-auto max-h-[30vh] p-2">
+          <div *ngFor="let data of fullData">
             @if (data.divisionId) {
-              <p>{{ data.divisionName }}</p>
+              <div
+                class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+                (click)="onLocationClick(data.divisionName)"
+              >
+                <p>
+                  {{ data.divisionName }}
+                </p>
+
+                <p>
+                  <span class="font-bold">{{ data.prescriptionCount }}</span>
+                  Counts
+                </p>
+              </div>
             }
             @if (data.districtId) {
-              <p>{{ data.districtName }}</p>
+              <div
+                class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+                (click)="onDistrictClick(data.districtName)"
+              >
+                <p>
+                  {{ data.districtName }}
+                </p>
+
+                <p>
+                  <span class="font-bold">{{ data.prescriptionCount }}</span>
+                  Counts
+                </p>
+              </div>
             }
-            <p>
-              <span class="font-bold">{{ data.prescriptionCount }}</span> Counts
-            </p>
+            @if (data.areaId) {
+              <div
+                class="flex flex-row justify-between border-b-2 mb-2 cursor-pointer hover:bg-gray-200"
+              >
+                <p>
+                  {{ data.areaName }}
+                </p>
+
+                <p>
+                  <span class="font-bold">{{ data.prescriptionCount }}</span>
+                  Counts
+                </p>
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -111,24 +305,8 @@
 }
 
 @if (!fullData) {
-  <div
-    class="bg-[#f2f6fc] shadow-xl rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg"
-    data-aos="zoom-in"
-  >
+  <div class="bg-[#f2f6fc] rounded-l-lg h-[70vh] lg:p-4 p-4 rounded-lg">
     <div role="alert" class="alert alert-success">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="stroke-current shrink-0 h-6 w-6 text-white"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
       <span class="text-white">
         Please search for a drug to see the results.</span
       >

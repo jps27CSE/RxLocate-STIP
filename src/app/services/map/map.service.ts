@@ -15,7 +15,7 @@ export class MapService {
   ) {}
 
   Get_All_Locations(): Observable<any> | null {
-    const url = `${this.mapApiUrl}/div/division-list`;
+    const url = `${this.mapApiUrl}/division/list`;
 
     const token = this.localStorageService.getToken();
 
@@ -34,7 +34,27 @@ export class MapService {
     location: string,
     medicine: string,
   ): Observable<any> | null {
-    const url = `${this.mapApiUrl}/map/select/${medicine}/${location}`;
+    const url = `${this.mapApiUrl}/map/summary?drugName=${medicine}&divisionName=${location}`;
+
+    const token = this.localStorageService.getToken();
+
+    if (token) {
+      const headers = new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      });
+      return this.http.get(url, { headers });
+    } else {
+      console.log('Token not available');
+      return null;
+    }
+  }
+
+  Get_Location_by_Medicine_Division_District(
+    drug: string,
+    division: string,
+    district: string,
+  ): Observable<any> | null {
+    const url = `${this.mapApiUrl}/map/${drug}/${division}/${district}`;
 
     const token = this.localStorageService.getToken();
 

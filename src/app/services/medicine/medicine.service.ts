@@ -15,7 +15,21 @@ export class MedicineService {
   ) {}
 
   Get_All_Drugs(): Observable<any> | null {
-    const url = `${this.mapApiUrl}/drug/drug-list`;
+    const url = `${this.mapApiUrl}/drug/list`;
+    const token = this.localStorageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        authorization: `Bearer ${token}`,
+      });
+      return this.http.get(url, { headers });
+    } else {
+      console.log('Token not available');
+      return null;
+    }
+  }
+
+  Get_All_Drugs_by_Charecter(drug: string): Observable<any> | null {
+    const url = `${this.mapApiUrl}/drug/list/${drug}`;
     const token = this.localStorageService.getToken();
     if (token) {
       const headers = new HttpHeaders({
@@ -29,7 +43,7 @@ export class MedicineService {
   }
 
   Search_By_Drug(drug: string): Observable<any> | null {
-    const url = `${this.mapApiUrl}/map/${drug}`;
+    const url = `${this.mapApiUrl}/map/summary?drugName=${drug}`;
     const token = this.localStorageService.getToken();
     if (token) {
       const headers = new HttpHeaders({
@@ -43,7 +57,7 @@ export class MedicineService {
   }
 
   Medicine_Info(drug: string): Observable<any> | null {
-    const url = `${this.mapApiUrl}/drug/drug-info/${drug}`;
+    const url = `${this.mapApiUrl}/drug/info/${drug}`;
 
     const token = this.localStorageService.getToken();
 
